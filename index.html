@@ -118,5 +118,24 @@
         // Check if user is already logged in
         auth.onAuthStateChanged(user => { if(user) setupApp(user); });
     </script>
+// --- AUTO-FIX LOGIN ERROR START ---
+firebase.auth().getRedirectResult().then((result) => {
+    if (result.user) {
+        console.log("Login Successful via Redirect!");
+    }
+}).catch((error) => {
+    // Agar wahi 'initial state' wala error aaye, toh ye popup khol dega
+    if (error.code === 'auth/idp-iframe-timeout' || error.code === 'auth/internal-error') {
+        console.log("Redirect failed, opening Popup fix...");
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then((result) => {
+            console.log("Login Successful via Popup!");
+        }).catch((popupError) => {
+            console.error("Popup also failed:", popupError);
+        });
+    }
+});
+// --- AUTO-FIX LOGIN ERROR END ---
+
 </body>
 </html>
