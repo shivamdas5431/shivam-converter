@@ -3,37 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shivam Code Pro - No Refresh Fix</title>
+    <title>Shivam Code Converter Pro</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
-        :root { --neon: #39ff14; --bg: #0a0a0a; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .container { width: 90%; max-width: 500px; border: 2px solid var(--neon); padding: 20px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); text-align: center; }
-        textarea { width: 100%; height: 80px; background: #1a1a1a; border: 1px solid var(--neon); color: var(--neon); padding: 10px; border-radius: 5px; margin: 10px 0; font-size: 16px; outline: none; }
-        .res-box { text-align: left; margin: 10px 0; padding: 10px; border-radius: 5px; background: #111; border-left: 4px solid var(--neon); position: relative; min-height: 40px; }
-        .copy-btn { position: absolute; right: 5px; top: 5px; font-size: 10px; padding: 2px 5px; background: #333; color: var(--neon); border: 1px solid var(--neon); cursor: pointer; }
-        button { background: black; color: white; border: 1px solid var(--neon); padding: 10px 15px; cursor: pointer; border-radius: 5px; margin: 5px; transition: 0.3s; }
-        button:hover { background: var(--neon); color: black; }
+        :root { --neon: #39ff14; --bg: #0a0a0a; --hex: #00f3ff; --oct: #bc13fe; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { width: 92%; max-width: 500px; border: 2px solid var(--neon); padding: 25px; border-radius: 20px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.15); text-align: center; background: rgba(10, 10, 10, 0.95); }
+        
+        h2 { color: var(--neon); text-transform: uppercase; letter-spacing: 2px; margin-top: 0; }
+        textarea { width: 100%; height: 90px; background: #151515; border: 1px solid var(--neon); color: var(--neon); padding: 12px; border-radius: 10px; margin: 15px 0; font-size: 16px; outline: none; transition: 0.3s; }
+        textarea:focus { box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); }
+
+        .res-box { text-align: left; margin: 15px 0; padding: 15px; border-radius: 12px; background: #111; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s; }
+        .res-box:hover { transform: translateY(-3px); background: #1a1a1a; }
+        .res-box strong { font-size: 12px; display: block; margin-bottom: 5px; opacity: 0.8; }
+        .res-box div { word-break: break-all; font-family: 'Courier New', monospace; color: #fff; }
+        
+        /* Individual Borders */
+        .bin-box { border-left: 5px solid var(--neon); }
+        .hex-box { border-left: 5px solid var(--hex); }
+        .oct-box { border-left: 5px solid var(--oct); }
+
+        .copy-btn { position: absolute; right: 10px; top: 10px; font-size: 10px; padding: 4px 8px; background: transparent; color: inherit; border: 1px solid currentColor; border-radius: 5px; cursor: pointer; opacity: 0.6; }
+        .copy-btn:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+
+        .btn-group { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+        .main-btn { flex: 1; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .pdf-btn { background: var(--neon); color: black; }
+        .logout-btn { background: #333; color: #ff4444; border: 1px solid #ff4444; }
+        
+        .hint { font-size: 11px; color: #666; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div id="login-box" class="container">
-        <h2 style="color: var(--neon);">SHIVAM CONVERTER</h2>
-        <button onclick="login()">LOGIN WITH GOOGLE</button>
+        <h2>SHIVAM CONVERTER</h2>
+        <p style="color:#888;">Please login to continue</p>
+        <button onclick="login()" class="main-btn pdf-btn" style="max-width: 200px; margin: auto;">LOGIN WITH GOOGLE</button>
     </div>
 
     <div id="app-main" class="container" style="display:none;">
-        <div id="user-tag" style="font-size:12px; color:#888; margin-bottom:10px;">User: Loading...</div>
-        <h2 style="color: var(--neon);">SHIVAM SMART PRO</h2>
+        <div id="user-tag" style="font-size:11px; color:#555; text-align: right; margin-bottom: 5px;">...</div>
+        <h2>SHIVAM CODE PRO</h2>
         
-        <textarea id="userInput" placeholder="Likhein ya Code paste karein..." oninput="smartConvert()"></textarea>
+        <textarea id="userInput" placeholder="Yahan kuch bhi likhein..." oninput="processInput()"></textarea>
         
-        <div class="res-box"><strong>BINARY:</strong> <div id="out-bin">...</div> <button class="copy-btn" onclick="copyIndividual('out-bin')">COPY</button></div>
-        <div class="res-box" style="border-color:#00f3ff;"><strong>HEX:</strong> <div id="out-hex">...</div> <button class="copy-btn" onclick="copyIndividual('out-hex')">COPY</button></div>
-        <div class="res-box" style="border-color:#bc13fe;"><strong>OCTAL:</strong> <div id="out-oct">...</div> <button class="copy-btn" onclick="copyIndividual('out-oct')">COPY</button></div>
-        
-        <button onclick="auth.signOut().then(() => location.reload())" style="color:red; border-color:red; margin-top:20px;">LOGOUT</button>
+        <div class="res-box bin-box" onclick="smartDecode('bin')">
+            <strong>BINARY</strong>
+            <button class="copy-btn" onclick="copyMe(event, 'out-bin')">COPY</button>
+            <div id="out-bin">...</div>
+        </div>
+
+        <div class="res-box hex-box" onclick="smartDecode('hex')">
+            <strong>HEXADECIMAL</strong>
+            <button class="copy-btn" onclick="copyMe(event, 'out-hex')">COPY</button>
+            <div id="out-hex">...</div>
+        </div>
+
+        <div class="res-box oct-box" onclick="smartDecode('oct')">
+            <strong>OCTAL</strong>
+            <button class="copy-btn" onclick="copyMe(event, 'out-oct')">COPY</button>
+            <div id="out-oct">...</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="main-btn pdf-btn" onclick="generatePDF()">GENERATE PDF</button>
+            <button class="main-btn logout-btn" onclick="auth.signOut().then(()=>location.reload())">LOGOUT</button>
+        </div>
+        <p class="hint">Tip: Tap on any box to Reverse-Convert that code!</p>
     </div>
 
     <script>
@@ -47,52 +88,108 @@
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         function login() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).catch(e => auth.signInWithRedirect(provider));
+            auth.signInWithPopup(provider).catch(() => auth.signInWithRedirect(provider));
         }
 
         auth.onAuthStateChanged(user => {
             if(user) {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('app-main').style.display = 'block';
-                document.getElementById('user-tag').innerText = "Active: " + user.displayName;
+                document.getElementById('user-tag').innerText = "Developer: " + user.displayName;
             }
         });
 
-        function smartConvert() {
-            let input = document.getElementById('userInput').value.trim();
-            
-            // FIX: Agar input khali hai toh boxes ko bhi khali kar do
-            if(!input) {
-                document.getElementById('out-bin').innerText = "...";
-                document.getElementById('out-hex').innerText = "...";
-                document.getElementById('out-oct').innerText = "...";
-                return;
-            }
-
-            // Logic for Binary to Text
-            if (/^[01\s]+$/.test(input) && input.length > 7) {
-                try {
-                    let text = input.split(' ').map(bin => String.fromCharCode(parseInt(bin, 2))).join('');
-                    document.getElementById('out-bin').innerText = "Text: " + text;
-                } catch(e) { }
-            } else {
-                // Text to Code
-                document.getElementById('out-bin').innerText = input.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
-                document.getElementById('out-hex').innerText = input.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
-                document.getElementById('out-oct').innerText = input.split('').map(c => c.charCodeAt(0).toString(8)).join(' ');
-            }
+        function processInput() {
+            let val = document.getElementById('userInput').value;
+            if(!val) { clearBoxes(); return; }
+            updateOutputs(val);
         }
 
-        function copyIndividual(id) {
-            let text = document.getElementById(id).innerText;
-            if(text === "...") return;
-            navigator.clipboard.writeText(text);
-            alert("Copied!");
+        function updateOutputs(text) {
+            document.getElementById('out-bin').innerText = text.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+            document.getElementById('out-hex').innerText = text.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
+            document.getElementById('out-oct').innerText = text.split('').map(c => c.charCodeAt(0).toString(8)).join(' ');
+        }
+
+        function smartDecode(type) {
+            let input = document.getElementById('userInput').value.trim();
+            if(!input) return;
+            let decoded = "";
+            try {
+                if(type==='bin') {
+                    let clean = input.replace(/\s/g, '');
+                    for(let i=0; i<clean.length; i+=8) decoded += String.fromCharCode(parseInt(clean.substr(i,8), 2));
+                } else if(type==='hex') {
+                    let clean = input.replace(/\s/g, '');
+                    for(let i=0; i<clean.length; i+=2) decoded += String.fromCharCode(parseInt(clean.substr(i,2), 16));
+                } else if(type==='oct') {
+                    decoded = input.split(' ').map(o => String.fromCharCode(parseInt(o, 8))).join('');
+                }
+                if(decoded && !decoded.includes('\0')) {
+                    document.getElementById('userInput').value = decoded;
+                    updateOutputs(decoded);
+                }
+            } catch(e) { alert("Format mismatch!"); }
+        }
+
+        function clearBoxes() {
+            ['out-bin', 'out-hex', 'out-oct'].forEach(id => document.getElementById(id).innerText = "...");
+        }
+
+        function copyMe(e, id) {
+            e.stopPropagation();
+            let txt = document.getElementById(id).innerText;
+            if(txt === "...") return;
+            navigator.clipboard.writeText(txt);
+            alert("Copied to Clipboard!");
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const val = document.getElementById('userInput').value || "No Input";
+            
+            doc.setFillColor(10, 10, 10);
+            doc.rect(0, 0, 210, 297, 'F');
+            
+            doc.setTextColor(57, 255, 20);
+            doc.setFontSize(22);
+            doc.text("SHIVAM CODE REPORT", 20, 25);
+            
+            doc.setDrawColor(57, 255, 20);
+            doc.line(20, 30, 190, 30);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(200, 200, 200);
+            doc.text("Original Text:", 20, 45);
+            doc.setTextColor(255, 255, 255);
+            doc.text(val.substring(0, 50), 20, 52);
+            
+            const results = [
+                { l: "BINARY", v: document.getElementById('out-bin').innerText },
+                { l: "HEXADECIMAL", v: document.getElementById('out-hex').innerText },
+                { l: "OCTAL", v: document.getElementById('out-oct').innerText }
+            ];
+            
+            let y = 70;
+            results.forEach(res => {
+                doc.setTextColor(150, 150, 150);
+                doc.text(res.l + ":", 20, y);
+                doc.setTextColor(255, 255, 255);
+                let splitTxt = doc.splitTextToSize(res.v, 170);
+                doc.text(splitTxt, 20, y + 7);
+                y += 15 + (splitTxt.length * 5);
+            });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text("Generated by Shivam Code Converter - " + new Date().toLocaleDateString(), 20, 280);
+            
+            doc.save("Shivam_Report.pdf");
         }
     </script>
 </body>
