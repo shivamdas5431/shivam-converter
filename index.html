@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivam Code Converter</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root { --neon: #39ff14; --bg: #0a0a0a; --hex-clr: #00f3ff; --oct-clr: #bc13fe; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { width: 90%; max-width: 500px; border: 2px solid var(--neon); padding: 20px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); text-align: center; }
+        #login-box { display: block; }
+        #app-main { display: none; }
+        textarea { width: 100%; height: 100px; background: #1a1a1a; border: 1px solid var(--neon); color: var(--neon); padding: 10px; border-radius: 5px; box-sizing: border-box; font-size: 16px; margin: 15px 0; }
+        .res-box { text-align: left; margin: 10px 0; padding: 10px; border-radius: 5px; background: #111; word-break: break-all; font-size: 14px; }
+        .bin { border-left: 4px solid var(--neon); color: var(--neon); }
+        .hex { border-left: 4px solid var(--hex-clr); color: var(--hex-clr); }
+        .oct { border-left: 4px solid var(--oct-clr); color: var(--oct-clr); }
+        button { background: black; color: white; border: 1px solid var(--neon); padding: 10px 15px; cursor: pointer; transition: 0.3s; margin: 5px; border-radius: 5px; }
+        button:hover { background: var(--neon); color: black; }
+        .user-info { font-size: 12px; color: #888; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div id="login-box" class="container">
+        <h2 style="color: var(--neon);">SHIVAM CONVERTER</h2>
+        <p>Aage badhne ke liye apni Google ID se login karein.</p>
+        <button onclick="login()">LOGIN WITH GOOGLE</button>
+    </div>
+
+    <div id="app-main" class="container">
+        <div class="user-info" id="user-tag">User: Loading...</div>
+        <h2 style="color: var(--neon);">SHIVAM CODE PRO</h2>
+        <textarea id="userInput" placeholder="Yahan Text ya Emoji likhein..." oninput="generateCodes()"></textarea>
+        <div id="capture-area">
+            <div class="res-box bin"><strong>BINARY:</strong> <div id="out-bin">...</div></div>
+            <div class="res-box hex"><strong>HEX:</strong> <div id="out-hex">...</div></div>
+            <div class="res-box oct"><strong>OCTAL:</strong> <div id="out-oct">...</div></div>
+        </div>
+        <div style="margin-top: 20px;">
+            <button onclick="downloadPDF()">PDF</button>
+            <button onclick="downloadIMG()">IMAGE</button>
+            <button onclick="copyAll()">COPY ALL</button>
+            <button onclick="logout()" style="border-color: red; color: red;">LOGOUT</button>
+        </div>
+    </div>
+</body>
+</html>
+    <script>
+        // --- STEP 1: Firebase Configuration ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHpXAaOOpppB95h2mrwQKGSvuasqSwQt8",
+            authDomain: "shivam-code-converter.firebaseapp.com",
+            projectId: "shivam-code-converter",
+            storageBucket: "shivam-code-converter.firebasestorage.app",
+            messagingSenderId: "245086667262",
+            appId: "1:245086667262:web:03b2c25f37529d72ab80af"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // --- STEP 2: Login Logic ---
+        function login() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((res) => {
+                setupApp(res.user);
+            }).catch(e => alert("Login Failed: " + e.message));
+        }
+
+        function setupApp(user) {
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('app-main').style.display = 'block';
+            document.getElementById('user-tag').innerText = "Active: " + user.displayName;
+        }
+
+        function logout() { auth.signOut().then(() => location.reload()); }
+
+        // --- STEP 3: Conversion Logic ---
+        function generateCodes() {
+            let val = document.getElementById('userInput').value;
+            if(!val) return;
+            
+            // Binary
+            document.getElementById('out-bin').innerText = val.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+            // Hex
+            document.getElementById('out-hex').innerText = val.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
+            // Octal
+            document.getElementById('out-oct').innerText = val.split('').map(c => c.charCodeAt(0).toString(8)).join(' ');
+        }
+
+        // --- STEP 4: Export Features ---
+        function downloadPDF() {
+            const area = document.getElementById('capture-area');
+            html2pdf().from(area).save('Shivam_Code.pdf');
+        }
+
+        function downloadIMG() {
+            html2canvas(document.getElementById('capture-area')).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'Shivam_Code.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        function copyAll() {
+            let txt = `Binary: ${document.getElementById('out-bin').innerText}\nHex: ${document.getElementById('out-hex').innerText}`;
+            navigator.clipboard.writeText(txt);
+            alert("Sab copy ho gaya!");
+        }
+
+        // Check if user is already logged in
+        auth.onAuthStateChanged(user => { if(user) setupApp(user); });
+    </script>
+</body>
+</html>
