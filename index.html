@@ -1,258 +1,101 @@
 <!DOCTYPE html>
-<html lang="hi" dir="ltr">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="author" content="Master Shivam">
-    <title>SHIVAM_CYBER-CORE_PRO_V14 | SUPREME_ADMIN</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@100;400;800&family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>SHIVAM_CYBER-CORE_V14_PRO | SUPREME_ADMIN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
-<body class="system-booting" id="master-body">
+<body class="system-boot">
 
     <div id="auth-gate" class="security-overlay">
         <div class="auth-box">
-            <div class="auth-header">
-                <div class="glitch-logo" data-text="CYBER-CORE">CYBER-CORE</div>
-                <p>MASTER_AUTHENTICATION_REQUIRED</p>
-            </div>
-            <div class="auth-body">
-                <button id="google-login-btn" class="g-btn">
-                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="G">
-                    <span>Login with Google</span>
-                </button>
-                <div class="auth-options">
-                    <p>Session Validity: 365 Days (1 Year)</p>
-                    <small>Authorized for: ashok91208@gmail.com</small>
-                </div>
-            </div>
+            <div class="glitch" data-text="CYBER-CORE">CYBER-CORE</div>
+            <p class="sys-msg">ADMIN_AUTHENTICATION_REQUIRED</p>
+            <button id="google-login-btn" class="g-btn">Login with Google</button>
+            <div class="auth-footer">Authorized: ashok91208@gmail.com</div>
         </div>
     </div>
 
-    <div class="blue-strip top-monitor" id="global-telemetry">
-        <div class="telemetry-wrapper">
-            <span class="t-item pulse">● SYS_STATUS: STABLE</span>
-            <span class="t-item">AUTH_LEVEL: <span id="admin-lvl">GUEST</span></span>
-            <span class="t-item">ENCRYPTION: AES_512_UNICODE</span>
-            <span class="t-item" id="sys-clock">18:00:00</span>
-        </div>
-    </div>
+    <header class="blue-strip top-strip">
+        <div class="status-box"><span class="pulse">●</span> SYS_STABLE</div>
+        <div class="admin-tag">LVL: <span id="admin-lvl">GUEST</span></div>
+        <div id="sys-clock">00:00:00</div>
+    </header>
 
-    <main class="terminal-frame hidden-system" id="main-dashboard">
+    <main id="main-dashboard" class="terminal-frame hidden-system">
         
-        <header class="cyber-header">
-            <div class="three-dots-container" onclick="openManager()">
-                <div class="dot-icon">⋮</div>
-                <span class="dot-lbl">SETTINGS</span>
+        <section class="ai-hub">
+            <div class="node-header">NODE_01_OVERLORD <div class="led"></div></div>
+            <div class="input-container">
+                <button class="mike-btn" id="master-mike">🎤</button>
+                <textarea id="txt" placeholder="Enter Data Stream (Symbols/Hindi OK)..." oninput="processMatrix()"></textarea>
             </div>
-            <div class="branding">
-                <h1>SHIVAM_CYBER-CORE_V14</h1>
-                <p>DEEP-CORE ADMINISTRATIVE INTERFACE</p>
-            </div>
-        </header>
+            <div id="char-count">DATA_SIZE: 0B</div>
+        </section>
 
-        <section class="ai-hub" id="node-ai-1">
-            <div class="ai-header">
-                <span class="node-tag">NODE_01_OVERLORD</span>
-                <div class="status-indicator active"></div>
+        <section class="matrix-grid">
+            <div class="matrix-box">
+                <label>01 // BINARY_STREAM</label>
+                <textarea id="bin" readonly placeholder="Waiting..."></textarea>
             </div>
-            <div class="interaction-zone">
-                <div class="mike-unit">
-                    <button class="mike-btn-main" id="common-mike" onclick="activateMike('common')">🎤</button>
-                    <small>MASTER_MIKE</small>
-                </div>
-                <div class="command-unit">
-                    <input type="text" id="ai1-input" placeholder="Execute Command (NLP Powered)..." autocomplete="off">
-                    <button class="execute-btn" onclick="executeCmd('ai1')">ENTER</button>
-                </div>
+            <div class="matrix-box">
+                <label>02 // HEX_BUFFER</label>
+                <textarea id="hex" readonly placeholder="Waiting..."></textarea>
             </div>
-            <div class="suggestion-bar" id="suggestion-engine">
-                <span class="s-msg">Waiting for input stream...</span>
+            <div class="matrix-box">
+                <label>03 // OCTAL_STATION</label>
+                <textarea id="oct" readonly placeholder="Waiting..."></textarea>
+            </div>
+            <div class="matrix-box">
+                <label>04 // UNICODE_REF</label>
+                <textarea id="uni" readonly placeholder="Waiting..."></textarea>
             </div>
         </section>
 
-        <section class="matrix-stack" id="scroll-matrix">
-            
-            <div class="m-box" id="box-txt">
-                <div class="m-head">
-                    <label>01 // SOURCE_DATA (HINDI_SYMBOL_OK)</label>
-                    <div class="m-ctrl">
-                        <button onclick="clearBox('txt')">CLR</button>
-                        <button onclick="saveAsTxt()">SAVE .TXT</button>
-                    </div>
-                </div>
-                <textarea id="txt" placeholder="Shivam, yahan likhein (Hindi/Symbols supported)..."></textarea>
-                <div class="m-foot">
-                    <span id="char-count">CHARS: 0</span>
-                    <button class="exe-box-btn" onclick="processData('txt')">EXECUTE</button>
-                </div>
-            </div>
-
-            <div class="m-box" id="box-bin">
-                <div class="m-head">
-                    <label>02 // BINARY_ENCRYPTION</label>
-                    <div class="m-ctrl"><button onclick="copyData('bin')">COPY</button></div>
-                </div>
-                <textarea id="bin" placeholder="Binary bitstream..."></textarea>
-                <div class="m-foot">
-                    <div class="p-bar"><div class="p-fill" id="fill-bin"></div></div>
-                    <button class="exe-box-btn" onclick="processData('bin')">EXECUTE</button>
-                </div>
-            </div>
-
-            <div class="m-box" id="box-hex">
-                <div class="m-head">
-                    <label>03 // HEXADECIMAL_LOG</label>
-                    <div class="m-ctrl"><button onclick="copyData('hex')">COPY</button></div>
-                </div>
-                <textarea id="hex" placeholder="Hexadecimal values..."></textarea>
-                <div class="m-foot">
-                    <div class="p-bar"><div class="p-fill" id="fill-hex"></div></div>
-                    <button class="exe-box-btn" onclick="processData('hex')">EXECUTE</button>
-                </div>
-            </div>
-
-            <div class="m-box" id="box-oct">
-                <div class="m-head">
-                    <label>04 // OCTAL_BASE8_STATION</label>
-                    <div class="m-ctrl"><button onclick="copyData('oct')">COPY</button></div>
-                </div>
-                <textarea id="oct" placeholder="Octal data points..."></textarea>
-                <div class="m-foot">
-                    <div class="p-bar"><div class="p-fill" id="fill-oct"></div></div>
-                    <button class="exe-box-btn" onclick="processData('oct')">EXECUTE</button>
-                </div>
-            </div>
-
-        </section>
-
-        <section class="hidden-gate-zone">
-            <div class="fingerprint-circle" id="vault-trigger" onclick="openVault()">
-                <div class="pulse-ring"></div>
-                <div class="fp-svg-wrapper">
-                    <svg viewBox="0 0 512 512" width="60" height="60">
-                        <path fill="var(--p-color)" d="M256,0C114.6,0,0,114.6,0,256s114.6,256,256,256s256-114.6,256-256S397.4,0,256,0z M256,464 c-114.9,0-208-93.1-208-208S141.1,48,256,48s208,93.1,208,208S370.9,464,256,464z"/>
-                    </svg>
-                </div>
-                <div class="fp-label">SECRET_WORLD_ENTRY</div>
+        <section class="gate-footer">
+            <div class="fingerprint-gate" onclick="openVault()">
+                <div class="scanner-line"></div>
+                <div class="fp-icon"></div>
+                <span class="fp-text">SECRET_WORLD_ENTRY</span>
             </div>
         </section>
-
     </main>
 
-    <div id="vault-modal" class="vault-overlay">
+    <div id="vault-modal" class="vault-overlay hidden-system">
         <div class="vault-window">
-            <header class="v-header">
-                <div class="v-ai-id"><strong>AI-4 // GUARDIAN_PRO</strong><small>SEC_LEVEL: 09</small></div>
-                <button class="v-close" onclick="closeVault()">EXIT_WORLD [X]</button>
+            <header class="vault-header">
+                <span>AI-4 // GUARDIAN_PRO</span>
+                <button onclick="closeVault()" class="close-btn">[X] EXIT</button>
             </header>
-
-            <div class="v-body">
-                <div id="vault-lock-screen" class="v-lock-ui">
-                    <h3>AUTHENTICATION_REQUIRED</h3>
-                    <div class="input-stack">
-                        <input type="password" id="vault-master-pass" placeholder="MASTER_KEY">
-                        <button class="v-exe-btn" onclick="verifyVault()">UNLOCK</button>
-                    </div>
-                    <p onclick="requestBypass()">Access Request for Admin Approval</p>
+            
+            <div class="vault-body">
+                <div id="vault-lock">
+                    <h3>SECURE_LOCK_ACTIVE</h3>
+                    <input type="password" id="vault-pass" placeholder="MASTER_KEY">
+                    <button class="exe-btn" onclick="verifyVaultAccess()">UNLOCK_VAULT</button>
+                    <p class="bypass-link" onclick="sendAccessRequest()">Request Admin Approval</p>
                 </div>
 
-                <div id="vault-content" class="v-interface hidden-system">
-                    <div class="v-scanner-unit">
-                        <div class="laser-scanner"></div>
-                        <p>360° LASER EXTRACTOR READY</p>
-                        <button class="v-exe-btn">INITIALIZE_SCAN</button>
-                    </div>
-
-                    <div class="v-workflow-grid">
-                        <div class="v-op-card">
-                            <h5>1.0 // DATA_IMPORT_SOURCE</h5>
-                            <div class="btn-group">
-                                <button>WHATSAPP</button><button>GALLERY</button><button>VIDEO</button>
-                            </div>
-                            <input type="text" placeholder="VIDEO_HASH_CODE">
-                            <button class="v-exe-btn">IMPORT</button>
+                <div id="vault-content" class="hidden-system">
+                    <div class="op-card">
+                        <h4>UNIVERSAL_STEGANOGRAPHY_ENGINE</h4>
+                        <div class="mode-select">
+                            <button onclick="triggerInjection('color')">COLOR_HD</button>
+                            <button onclick="triggerInjection('bw')">B&W_PRINT</button>
                         </div>
-
-                        <div class="v-op-card">
-                            <h5>2.0 // AI-3_DESIGNER_ENGINE</h5>
-                            <div class="interaction-stack">
-                                <button class="v-mike-small">🎤</button>
-                                <textarea id="ai3-prompt" placeholder="Command AI-3: (e.g., 'Make House Painting', 'Color this')"></textarea>
-                            </div>
-                            <div class="btn-group">
-                                <button>UPLOAD_PHOTO</button><button>AI_GENERATE</button>
-                            </div>
-                            <button class="v-exe-btn">RENDER_DESIGN</button>
-                        </div>
-
-                        <div class="v-op-card">
-                            <h5>3.0 // PRINT_OPTIMIZATION</h5>
-                            <div class="btn-group">
-                                <button class="p-bw">B&W_STENCIL</button><button class="p-clr">COLOUR_HD</button>
-                            </div>
-                            <button class="v-exe-btn">EXPORT_LINK</button>
-                        </div>
+                        <p class="hint">Hide WhatsApp, PDF, MP3, Video inside Photos.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <aside id="side-drawer" class="cyber-drawer">
-        <div class="d-header">
-            <h4>AI-2 // SYSTEM_MANAGER</h4>
-            <button onclick="openManager()">[X]</button>
-        </div>
-        <div class="d-body">
-            <div class="d-comm">
-                <button class="v-mike-small">🎤</button>
-                <input type="text" placeholder="Ask AI-2 Manager...">
-            </div>
-            
-            <nav class="d-nav">
-                <div class="nav-sec">MASTER_SETTINGS</div>
-                <div class="setting-item">
-                    <span>GAP vs NO-GAP</span>
-                    <button class="sw-btn" id="sw-gap">AUTO</button>
-                </div>
-                <div class="setting-item">
-                    <span>SCROLL_SYNC</span>
-                    <button class="sw-btn" id="sw-sync">AUTO</button>
-                </div>
-                <div class="setting-item">
-                    <span>AI_PERMISSIONS</span>
-                    <button class="sw-btn" id="sw-ai">FULL</button>
-                </div>
-
-                <div class="nav-sec">HISTORY_MANAGER (CHROME-STYLE)</div>
-                <div id="history-container" class="history-list">
-                    </div>
-                <div class="history-controls">
-                    <button onclick="clearHistory()">CLEAR_ALL</button>
-                    <button onclick="exportHistory()">EXPORT_LOGS</button>
-                </div>
-            </nav>
-        </div>
-    </aside>
-
-    <footer class="blue-strip bottom-monitor" id="global-activity">
-        <div class="ticker-wrap">
-            <div class="ticker-item" id="activity-log">
-                [BOOT]: Cyber-Core V14 active... [ADMIN]: ashok91208@gmail.com verified... [NODE]: Waiting...
-            </div>
-        </div>
-    </footer>
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Internal Clock Logic
-        setInterval(() => {
-            document.getElementById('sys-clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
-    </script>
 </body>
-                </html>
-                
+</html>
