@@ -12,139 +12,82 @@ body {
     color: white;
     font-family: 'Share Tech Mono', monospace;
     margin: 0;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
-/* 3-DOT MENU POSITIONING */
-.terminal-bar.top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: #000;
-    border-bottom: 2px solid var(--cyber-blue);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.three-dots {
-    font-size: 30px;
-    cursor: pointer;
+/* DOUBLE BLUE STRIPS */
+.blue-strip {
+    background: rgba(0, 243, 255, 0.15);
+    border: 1px solid var(--cyber-blue);
     color: var(--cyber-blue);
-    line-height: 1;
-}
-
-/* SIDE PANEL (AI-2) */
-.side-panel {
-    position: fixed;
-    right: -280px;
-    top: 0;
-    width: 260px;
-    height: 100%;
-    background: rgba(0, 8, 15, 0.98);
-    border-left: 2px solid var(--cyber-blue);
-    padding: 25px;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2000;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-}
-
-.side-panel.active { right: 0; }
-
-/* MATRIX GRID LAYOUT */
-.matrix-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-}
-
-.cyber-box {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid #222;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    background: #000;
-    border: 1px solid #333;
-    color: var(--neon-green);
-    border-left: 4px solid var(--cyber-blue);
-    padding: 10px;
-    font-family: inherit;
-    outline: none;
-    box-sizing: border-box;
-}
-
-/* THE SILVER THUMB VAULT DOOR */
-.vault-container {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.thumb-door {
-    width: 150px;
-    height: 180px;
-    background: linear-gradient(145deg, #2a2a2a, #555, #2a2a2a);
-    border: 5px solid var(--silver);
-    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 12px;
     text-align: center;
-    cursor: pointer;
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+    box-shadow: 0 0 10px var(--cyber-blue);
+}
+
+.blue-strip.top { position: sticky; top: 0; z-index: 1000; }
+.blue-strip.bottom { position: fixed; bottom: 0; width: 100%; z-index: 1000; }
+
+/* CYBER BOXES (SEPARATE SECTIONS) */
+.feature-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #333;
+    border-left: 4px solid var(--cyber-blue);
+    margin: 15px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.feature-box h4 { margin-top: 0; color: var(--cyber-blue); font-size: 14px; }
+
+/* MIKE & TYPE BOX GROUP */
+.comm-group {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.silver-scanner {
-    width: 70px;
-    height: 90px;
-    background: url('https://img.icons8.com/ios-filled/100/ffffff/fingerprint.png') no-repeat center;
-    background-size: contain;
-    filter: drop-shadow(0 0 8px var(--cyber-blue));
-    margin-bottom: 10px;
+.mike-btn {
+    background: #111;
+    border: 1px solid var(--cyber-blue);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.thumb-door p {
-    font-size: 11px;
-    color: var(--silver);
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    background: #000;
+    border: 1px solid #444;
+    color: var(--neon-green);
+    padding: 10px;
+    outline: none;
+}
+
+/* HELICOPTER STYLE BUTTONS */
+button {
+    background: #000;
+    border: 1px solid var(--cyber-blue);
+    color: var(--cyber-blue);
+    padding: 10px 15px;
+    cursor: pointer;
     font-weight: bold;
-    margin: 0;
     text-transform: uppercase;
 }
 
-/* MODAL FIX */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 3000;
+button:hover {
+    background: var(--cyber-blue);
+    color: black;
 }
 
-.modal-content.cyber-blue-box {
-    background: #000b15;
-    border: 2px solid var(--cyber-blue);
-    width: 85%;
-    max-width: 450px;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.scan-grid button {
-    background: transparent;
-    border: 1px solid var(--cyber-blue);
-    color: var(--cyber-blue);
-    padding: 12px 5px;
-    font-size: 11px;
-    cursor: pointer;
-    margin: 5px;
+/* VAULT SCANNER */
+.silver-scanner {
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+    background: url('https://img.icons8.com/ios-filled/100/ffffff/fingerprint.png') no-repeat center;
+    background-size: contain;
+    filter: drop-shadow(0 0 10px var(--cyber-blue));
 }
