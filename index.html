@@ -1,82 +1,297 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" dir="ltr" class="shivam-core-v14-authorized">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIVAM CYBER-CORE PRO V14</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#050505">
+    
+    <title>SHIVAM CYBER-CORE PRO V14 | MASTER_ADMIN_TERMINAL | DEEP_CORE_STATION</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@100;300;500;700&family=JetBrains+Mono:wght@100;400;800&family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="blue-strip top">SYSTEM STATUS: READY | ADMIN: SHIVAM</div>
 
-    <div class="terminal-bar">
-        <div class="ai-unit">
-            <span>AI-1 (Dashboard)</span>
-            <div class="comm-group">
-                <button class="mike-btn">🎤</button>
-                <input type="text" placeholder="Dashboard order...">
-            </div>
+    <style>
+        /* [INLINE CRITICAL BOOTSTRAP] */
+        :root { 
+            --p-color: #00f3ff; --s-color: #39ff14; --danger: #ff003c; 
+            --bg-main: #020202; --panel-bg: rgba(15, 15, 15, 0.95);
+        }
+        body.booting { background: var(--bg-main); color: var(--p-color); cursor: wait; }
+        .diagnostic-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; }
+    </style>
+</head>
+
+<body class="booting admin-shivam-authorized">
+
+    <div class="blue-strip top-monitor-heavy" id="telemetry-node">
+        <div class="telemetry-grid">
+            <div class="t-cell"><span class="t-label">SYS_STATUS:</span><span class="t-val blink">STABLE</span></div>
+            <div class="t-cell"><span class="t-label">AUTH_LVL:</span><span class="t-val">MASTER_ADMIN</span></div>
+            <div class="t-cell"><span class="t-label">USER_ID:</span><span class="t-val">SHIVAM_PUSA_BR</span></div>
+            <div class="t-cell"><span class="t-label">NETWORK:</span><span class="t-val">5G_ENCRYPTED</span></div>
+            <div class="t-cell"><span class="t-label">DATA_LOAD:</span><span class="t-val">84.2 GB</span></div>
+            <div class="t-cell"><span class="t-label">UPTIME:</span><span class="t-val" id="timer">00:00:00</span></div>
+            <div class="t-cell"><span class="t-label">THREAT_LVL:</span><span class="t-val" style="color:var(--s-color)">ZERO</span></div>
         </div>
-        <div class="three-dots" onclick="toggleMenu()">⋮</div>
     </div>
 
-    <main class="dashboard">
-        <div class="matrix-grid">
-            <div class="cyber-box"><label>TEXT</label><textarea id="txt"></textarea></div>
-            <div class="cyber-box"><label>BINARY</label><textarea id="bin" readonly></textarea></div>
-        </div>
+    <main class="titan-container" id="terminal-v14">
 
-        <div class="vault-container">
-            <div class="thumb-door" onclick="openVault()">
-                <div class="silver-scanner"></div>
-                <p>VAULT ACCESS</p>
+        <header class="cyber-hud">
+            <div class="branding-matrix">
+                <div class="glitch-text" data-text="SHIVAM_CYBER-CORE_PRO_V14">SHIVAM_CYBER-CORE_PRO_V14</div>
+                <div class="sub-line">DEEP-CORE ADMINISTRATIVE INTERFACE | AUTHORIZED: SHIVAM</div>
             </div>
-        </div>
+
+            <div class="ai-master-unit-wrapper">
+                <section class="ai-node-pro" id="node-ai-1">
+                    <div class="node-header">
+                        <div class="node-id">NODE_01_OVERLORD</div>
+                        <div class="ai-status-pulse active"></div>
+                    </div>
+                    <div class="node-body">
+                        <div class="ai-visualizer">
+                            <div class="orb-container"><div class="orb"></div></div>
+                        </div>
+                        <div class="comm-interface">
+                            <div class="mike-section">
+                                <button class="p-mike" id="btn-mike-ai1">🎤</button>
+                                <span class="lbl">AI-1_MIC</span>
+                            </div>
+                            <div class="input-section">
+                                <input type="text" id="ai1-input" placeholder="Execute Administrative Directive..." autocomplete="off">
+                                <div class="suggest-ribbon">
+                                    <span class="pill">/INIT_VAULT</span><span class="pill">/WIPE_MEMORY</span><span class="pill">/DEBUG_LOGS</span><span class="pill">/STATUS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="diagnostic-logs">
+                        <p>> AI-1: Waiting for master command...</p>
+                        <p>> NLP Engine: Online (Hindi/English Support)</p>
+                    </div>
+                </section>
+            </div>
+        </header>
+
+        <section class="cockpit-hardware-emulation">
+            <div class="cockpit-label">MANUAL_VS_AI_HARDWARE_CONTROL</div>
+            <div class="toggle-array">
+                
+                <div class="h-switch" id="h-sw-manual">
+                    <div class="h-meta"><span>SW_01</span><label>MANUAL_OVERRIDE</label></div>
+                    <div class="h-lever-base" onclick="flipSw('manual')">
+                        <div class="h-handle" id="lv-man"></div>
+                    </div>
+                    <div class="h-status"><span class="off">OFF</span><span class="on">ON</span></div>
+                </div>
+
+                <div class="h-switch" id="h-sw-auto">
+                    <div class="h-meta"><span>SW_02</span><label>AI_AUTOMATION</label></div>
+                    <div class="h-lever-base active" onclick="flipSw('auto')">
+                        <div class="h-handle active" id="lv-auto"></div>
+                    </div>
+                    <div class="h-status"><span class="off">OFF</span><span class="on active">ON</span></div>
+                </div>
+
+                <div class="h-switch" id="h-sw-bypass">
+                    <div class="h-meta"><span>SW_03</span><label>MULTIMEDIA_BYPASS</label></div>
+                    <div class="h-lever-base" onclick="flipSw('bypass')">
+                        <div class="h-handle" id="lv-bypass"></div>
+                    </div>
+                    <div class="h-status"><span class="off">OFF</span><span class="on">ON</span></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="matrix-deep-stack">
+            
+            <div class="m-card-pro" id="m-1">
+                <div class="m-head">
+                    <div class="m-title">DATA_NODE // 01 // TEXT_SOURCE</div>
+                    <div class="m-ctrl"><button onclick="box('clr','txt')">CLR</button><button onclick="box('pst','txt')">PST</button></div>
+                </div>
+                <div class="m-body">
+                    <textarea id="txt" placeholder="Enter source data here for real-time vectorization..."></textarea>
+                </div>
+                <div class="m-foot">
+                    <div class="m-stat">LENGTH: <span id="c1">0</span></div>
+                    <div class="m-stat">ENTROPY: 0.14</div>
+                </div>
+            </div>
+
+            <div class="m-card-pro" id="m-2">
+                <div class="m-head">
+                    <div class="m-title">DATA_NODE // 02 // BINARY_BITSTREAM</div>
+                    <div class="m-ctrl"><button onclick="box('cpy','bin')">CPY</button></div>
+                </div>
+                <div class="m-body">
+                    <textarea id="bin" readonly placeholder="Waiting for data stream..."></textarea>
+                </div>
+                <div class="m-progress"><div class="m-bar" id="p1"></div></div>
+            </div>
+
+            <div class="m-card-pro" id="m-3">
+                <div class="m-head">
+                    <div class="m-title">DATA_NODE // 03 // HEX_CONVERSION</div>
+                    <div class="m-ctrl"><button onclick="box('cpy','hex')">CPY</button></div>
+                </div>
+                <div class="m-body">
+                    <textarea id="hex" readonly placeholder="Hexadecimal values..."></textarea>
+                </div>
+                <div class="m-progress"><div class="m-bar" id="p2"></div></div>
+            </div>
+
+            <div class="m-card-pro" id="m-4">
+                <div class="m-head">
+                    <div class="m-title">DATA_NODE // 04 // OCTAL_BASE8</div>
+                    <div class="m-ctrl"><button onclick="box('cpy','oct')">CPY</button></div>
+                </div>
+                <div class="m-body">
+                    <textarea id="oct" readonly placeholder="Octal data points..."></textarea>
+                </div>
+                <div class="m-progress"><div class="m-bar" id="p3"></div></div>
+            </div>
+
+        </section>
+
+        <section class="biometric-vault-entry">
+            <div class="scanner-wrap" id="entry-gate" onclick="biometricStart()">
+                <div class="laser-beam"></div>
+                <div class="fp-svg-container">
+                    <svg viewBox="0 0 512 512" width="140" height="140">
+                        <path fill="var(--p-color)" d="M256,0C114.6,0,0,114.6,0,256s114.6,256,256,256s256-114.6,256-256S397.4,0,256,0z M256,464 c-114.9,0-208-93.1-208-208S141.1,48,256,48s208,93.1,208,208S370.9,464,256,464z"/>
+                        <circle cx="256" cy="256" r="160" fill="none" stroke="var(--p-color)" stroke-width="4" stroke-dasharray="20 10"/>
+                        <path class="scan-path" d="M256,128c-70.7,0-128,57.3-128,128s57.3,128,128,128s128-57.3,128-128S326.7,128,256,128z" fill="var(--p-color)" opacity="0.3"/>
+                    </svg>
+                </div>
+                <div class="auth-label">
+                    <h2>BIOMETRIC_AUTH_REQUIRED</h2>
+                    <p>VERIFYING IDENTITY: MASTER SHIVAM...</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <div id="vault-modal" class="modal">
-        <div class="modal-content cyber-blue-box">
-            <span class="close" onclick="closeVault()">&times;</span>
-            
-            <div class="feature-box" id="step-1">
-                <h4>📥 STEP 1: SELECT FILE & SOURCE</h4>
-                <div class="btn-group">
-                    <button>WA</button><button>GALLERY</button><button>FILES</button>
-                </div>
-                <input type="text" placeholder="Enter File Password (if any)">
-                <p class="desc">Kahan se file uthani hai aur uska password kya hai?</p>
-            </div>
+    <div id="vault-modal" class="modal-heavy">
+        <div class="modal-scroller">
+            <div class="modal-content-pro">
+                
+                <header class="modal-h">
+                    <div class="h-id">AI-4 // VAULT_GUARDIAN_STATION</div>
+                    <button class="h-close" onclick="closeVault()">EXIT_SYSTEM [X]</button>
+                </header>
 
-            <div class="feature-box" id="step-2">
-                <h4>🖼️ STEP 2: CHOOSE TARGET IMAGE</h4>
-                <div class="btn-group">
-                    <button onclick="showManual()">UPLOAD MINE</button>
-                    <button onclick="showAI()">AI GENERATE</button>
+                <div class="vault-ai-interface">
+                    <div class="ai-avatar-box"></div>
+                    <div class="ai-bubble" id="ai4-msg">Awaiting Operational Protocols, Master.</div>
+                    <div class="ai-input-row">
+                        <button class="v-mike">🎤</button>
+                        <input type="text" id="ai4-in" placeholder="Talk or Type to Guardian...">
+                    </div>
                 </div>
-                <div id="ai-gen-input" style="display:none; margin-top:10px;">
-                    <input type="text" placeholder="Describe shape (e.g. Elephant in Space)">
-                    <p class="desc">AI kya design banaye?</p>
-                </div>
-            </div>
 
-            <div class="feature-box" id="step-3">
-                <h4>🖨️ STEP 3: PRINT STYLE</h4>
-                <div class="btn-group">
-                    <button style="background: #333; color: white;">BLACK & WHITE</button>
-                    <button style="background: linear-gradient(to right, red, blue); color: white;">COLOUR</button>
-                </div>
-                <p class="desc">B&W sasta print ya Rangeen mahanga print?</p>
-            </div>
+                <div class="op-card-grid">
+                    
+                    <div class="op-card" id="op-0">
+                        <div class="op-card-h"><span>0.0</span><h5>FILE_RETRIEVAL_STATION</h5></div>
+                        <div class="op-card-b">
+                            <div class="i-field"><label>FILE_CODE</label><input type="text" id="v-id" placeholder="#402-BR"></div>
+                            <div class="i-field"><label>PASSWORD</label><input type="password" id="v-pass" placeholder="••••••••"></div>
+                            <button class="exe-btn">EXECUTE_SEARCH</button>
+                        </div>
+                    </div>
 
-            <div class="feature-box">
-                <h4>📸 MANUAL SCANNER</h4>
-                <button class="scan-main-btn">ACTIVATE LASER SCANNER</button>
-            </div>
+                    <div class="op-card" id="op-1">
+                        <div class="op-card-h"><span>1.0</span><h5>IMPORT_SOURCE_PICKER</h5></div>
+                        <div class="op-card-b">
+                            <div class="btn-grid-4">
+                                <button class="g-btn">WA</button><button class="g-btn">GAL</button>
+                                <button class="g-btn">DRV</button><button class="g-btn">USB</button>
+                            </div>
+                            <p class="i-text">Kahan se file import karni hai?</p>
+                        </div>
+                    </div>
+
+                    <div class="op-card" id="op-2">
+                        <div class="op-card-h"><span>2.0</span><h5>TARGET_CARRIER_LOGIC</h5></div>
+                        <div class="op-card-b">
+                            <div class="dual-row"><button>MANUAL_UPLOAD</button><button>AI_GENERATOR</button></div>
+                            <div class="ai3-box">
+                                <label>AI-3: DESIGNER_INPUT</label>
+                                <textarea placeholder="Describe the design shape (e.g. 'A Tiger in a Forest')"></textarea>
+                                <div class="v-mike-small">🎤 TALK TO AI-3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="op-card" id="op-3">
+                        <div class="op-card-h"><span>3.0</span><h5>PRINT_OUTPUT_PROTOCOL</h5></div>
+                        <div class="op-card-b">
+                            <div class="dual-row">
+                                <button class="p-btn bw">B&W_ECONOMY</button>
+                                <button class="p-btn clr">COLOUR_PREMIUM</button>
+                            </div>
+                            <div class="sec-row">
+                                <input type="checkbox" id="req-p">
+                                <label for="req-p">Force Permission Request Protocol</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="op-card full-w" id="op-9">
+                        <div class="op-card-h"><span>9.0</span><h5>HARDWARE_LASER_EXTRACTOR</h5></div>
+                        <div class="op-card-b-row">
+                            <button class="laser-btn">INITIALIZE_LASER_SCAN_SEQUENCE</button>
+                            <div class="diag-v">
+                                <span>SENSOR: READY</span><span>LENS: CALIBRATED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> </div>
         </div>
     </div>
 
-    <div class="blue-strip bottom">LOGS: Monitoring Active | REVISION: 4m Memory Clear</div>
+    <aside id="side-drawer" class="titan-drawer">
+        <div class="drawer-h">AI-2 // SYSTEM_MANAGER</div>
+        <div class="drawer-comm">
+            <button class="d-mike">🎤</button>
+            <input type="text" placeholder="Order AI-2 Manager...">
+        </div>
+        <nav class="drawer-nav">
+            <a href="#">SYSTEM_HISTORY_LOGS</a>
+            <a href="#">ENCRYPTION_REPORTS_WA</a>
+            <a href="#">REVISION_BUFFER_MANAGEMENT</a>
+            <a href="#">ADMIN_PROFILE_SETTINGS</a>
+        </nav>
+        <div class="drawer-user-info">
+            <p>USER: SHIVAM (MASTER_ADMIN)</p>
+            <p>RANK: ELITE_DEVELOPER</p>
+            <p>LOCATION: SAMASTIPUR_PUSA_BR</p>
+        </div>
+    </aside>
+
+    <footer class="blue-strip bottom-monitor-heavy" id="activity-log">
+        <div class="ticker-box">
+            <div class="ticker-wrap" id="live-logs">
+                [LOG]: Encryption node active... [REVISION]: Cache clears in 4m... [ADMIN]: Shivam verified... [INFO]: AES-512 handshake OK...
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Internal Diagnostic Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('timer').innerText = now.toLocaleTimeString();
+        }, 1000);
+    </script>
 </body>
-</html>
+                                            </html>
+                                
