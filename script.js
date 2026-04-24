@@ -1,236 +1,263 @@
 /* ====================================================================================================
-    SHIVAM CYBER-CORE PRO V14 | MASTER EXECUTABLE SYSTEM [DEEP-CORE]
-    ADMINISTRATOR: MASTER SHIVAM (PUSA, SAMASTIPUR, BIHAR)
-    SYSTEM ARCHITECTURE: MODULAR MULTI-AI COORDINATION
-    TOTAL DEPTH: LEVEL_9_ALPHA_STABLE
-====================================================================================================
-*/
+    SHIVAM CYBER-CORE PRO V14 | MASTER_ADMIN_LOGIC_ENGINE
+    SUPREME ADMIN: ashok91208@gmail.com
+    FEATURES: GOD_MODE_BYPASS, UNICODE_CONVERTER, SCROLL_SYNC, AI_COORDINATION
+    BUILD: 14.0.88 [EXTREME_DENSITY]
+==================================================================================================== */
 
 "use strict";
 
 /**
- * [01] GLOBAL SYSTEM CONFIGURATION & TELEMETRY
- * Tracking every movement of the UI and Backend state.
+ * [01] SYSTEM CONFIGURATION & GLOBAL STATE
  */
-class CyberSystem {
+const MASTER_ADMIN_EMAIL = "ashok91208@gmail.com";
+
+class CyberCore {
     constructor() {
-        this.version = "14.0.22-ULTRA";
-        this.admin = "SHIVAM";
-        this.sessionID = "SC-" + Math.floor(Math.random() * 999999);
-        this.bootTime = new Date().toISOString();
-        this.state = {
-            isVaultOpen: false,
-            isManualMode: false,
-            isStealthActive: false,
-            encryptionLevel: 512,
-            activeNodes: ["AI-1", "AI-2", "AI-3", "AI-4"]
-        };
-        this.logs = [];
+        this.version = "14.0.88-PRO";
+        this.currentUser = null;
+        this.isAdmin = false;
+        this.isVaultOpen = false;
+        this.scrollSync = true;
+        this.gapMode = true; // Auto Gap between codes
+        this.history = JSON.parse(localStorage.getItem('cyber_history')) || [];
         this.init();
     }
 
     init() {
         console.log(`%c [BOOT]: SHIVAM-CORE ${this.version} INITIALIZED `, "background: #00f3ff; color: #000;");
-        this.updateLog("System Boot Sequence Complete. All Nodes Online.");
+        this.setupEventListeners();
+        this.checkExistingSession();
     }
 
     updateLog(msg) {
-        const ticker = document.getElementById('activity-log');
+        const logger = document.getElementById('activity-log');
         const timestamp = new Date().toLocaleTimeString();
-        const fullMsg = `[${timestamp}] [LOG]: ${msg} | ADMIN: ${this.admin}`;
-        this.logs.push(fullMsg);
-        if (ticker) ticker.innerText = fullMsg;
-        if (this.logs.length > 100) this.logs.shift(); // Memory optimization
+        if (logger) logger.innerText = `[${timestamp}] [NODE_01]: ${msg}`;
     }
 }
 
-const Core = new CyberSystem();
+const Core = new CyberCore();
 
 /**
- * [02] MATRIX CONVERSION ENGINE
- * Handles real-time Text to Binary, Hex, and Octal with Progress Simulation.
+ * [02] SECURITY GATE & GOD-MODE BYPASS
+ * One-time login logic (Session validity: 1 Year)
  */
-const MatrixEngine = {
-    process: function() {
-        if (Core.state.isManualMode) return;
+function handleGoogleLogin() {
+    // Simulating Google Auth Protocol
+    const mockEmail = prompt("ENTER_AUTHORIZED_GOOGLE_EMAIL:");
+    
+    if (mockEmail) {
+        Core.currentUser = mockEmail;
+        localStorage.setItem('cyber_session', JSON.stringify({
+            email: mockEmail,
+            expiry: Date.now() + (365 * 24 * 60 * 60 * 1000) // 1 Year
+        }));
+        
+        verifyAccess(mockEmail);
+    }
+}
 
-        const input = document.getElementById('txt').value;
-        if (!input) {
-            this.clearAll();
-            return;
-        }
+function verifyAccess(email) {
+    const authGate = document.getElementById('auth-gate');
+    const dashboard = document.getElementById('main-dashboard');
+    const adminLvl = document.getElementById('admin-lvl');
 
-        try {
-            this.generateBinary(input);
-            this.generateHex(input);
-            this.generateOctal(input);
-            Core.updateLog(`Matrix Vectorization: ${input.length} characters processed.`);
-        } catch (err) {
-            Core.updateLog(`CRITICAL ERROR: Matrix Desync - ${err.message}`);
-        }
-    },
+    if (email === MASTER_ADMIN_EMAIL) {
+        Core.isAdmin = true;
+        adminLvl.innerText = "SUPREME_ADMIN (GOD_MODE)";
+        adminLvl.classList.add('god-mode-label');
+        Core.updateLog("God Mode Detected. Bypassing all security layers...");
+    } else {
+        Core.isAdmin = false;
+        adminLvl.innerText = "VERIFIED_USER";
+        Core.updateLog(`User ${email} verified. Standard access granted.`);
+    }
 
-    generateBinary: function(data) {
-        const bin = data.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+    // Unlocking Dashboard (Removing the Invisible Parda)
+    authGate.classList.add('fade-out');
+    setTimeout(() => {
+        authGate.style.display = 'none';
+        dashboard.classList.remove('hidden-system');
+        dashboard.classList.add('fade-in');
+    }, 500);
+}
+
+function checkExistingSession() {
+    const session = JSON.parse(localStorage.getItem('cyber_session'));
+    if (session && session.expiry > Date.now()) {
+        verifyAccess(session.email);
+    }
+}
+
+/**
+ * [03] THE CONVERSION MATRIX (HINDI, SYMBOLS & UNICODE)
+ * Industrial Logic for 4-Box Interaction
+ */
+const Converter = {
+    // Text to everything
+    fromText: function(val) {
+        if (!val) return this.clearAll();
+        
+        // 1. To Binary
+        const bin = Array.from(val).map(char => 
+            char.charCodeAt(0).toString(2).padStart(8, '0')
+        ).join(Core.gapMode ? ' ' : '');
         document.getElementById('bin').value = bin;
-        this.animateBar('p-bin', 100);
-    },
 
-    generateHex: function(data) {
-        const hex = data.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0')).join(' ');
+        // 2. To Hex
+        const hex = Array.from(val).map(char => 
+            char.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0')
+        ).join(Core.gapMode ? ' ' : '');
         document.getElementById('hex').value = hex;
-        this.animateBar('p-hex', 100);
-    },
 
-    generateOctal: function(data) {
-        const oct = data.split('').map(c => c.charCodeAt(0).toString(8).padStart(3, '0')).join(' ');
+        // 3. To Octal
+        const oct = Array.from(val).map(char => 
+            char.charCodeAt(0).toString(8).padStart(3, '0')
+        ).join(Core.gapMode ? ' ' : '');
         document.getElementById('oct').value = oct;
-        this.animateBar('p-oct', 100);
+
+        this.updateBars(100);
+        this.updateStats(val);
     },
 
-    animateBar: function(id, val) {
-        const el = document.getElementById(id);
-        if (el) el.style.width = val + "%";
+    updateBars: function(p) {
+        ['bin', 'hex', 'oct'].forEach(id => {
+            document.getElementById(`fill-${id}`).style.width = p + "%";
+        });
+    },
+
+    updateStats: function(val) {
+        document.getElementById('char-count').innerText = `CHARS: ${val.length}`;
     },
 
     clearAll: function() {
-        ['bin', 'hex', 'oct'].forEach(id => document.getElementById(id).value = "");
-        ['p-bin', 'p-hex', 'p-oct'].forEach(id => this.animateBar(id, 0));
+        ['txt', 'bin', 'hex', 'oct'].forEach(id => document.getElementById(id).value = "");
+        this.updateBars(0);
+        this.updateStats("");
     }
 };
 
 /**
- * [03] HARDWARE EMULATION LOGIC (HELICOPTER SWITCHES)
- * Real-time flip detection and circuit simulation.
+ * [04] SCROLL SYNC & UI CONTROLS
  */
-const Hardware = {
-    flip: function(type) {
-        const switches = {
-            manual: { id: 'lv-man', lamp: 'lp-man', state: 'isManualMode' },
-            auto: { id: 'lv-auto', lamp: 'lp-auto', state: null }, // Auto is opposite of manual
-            stealth: { id: 'lv-stealth', lamp: 'lp-stealth', state: 'isStealthActive' }
-        };
+const UI = {
+    syncScroll: function(e) {
+        if (!Core.scrollSync) return;
+        const boxes = ['txt', 'bin', 'hex', 'oct'];
+        const top = e.target.scrollTop;
+        boxes.forEach(id => {
+            const el = document.getElementById(id);
+            if (el !== e.target) el.scrollTop = top;
+        });
+    },
 
-        const target = switches[type];
-        Core.updateLog(`Hardware Interaction Detected: ${type.toUpperCase()}_SWITCH`);
-
-        if (type === 'manual') {
-            Core.state.isManualMode = true;
-            this.updateUI('lv-man', 'lp-man', true);
-            this.updateUI('lv-auto', 'lp-auto', false);
-            Core.updateLog("AI Automation Terminated. Manual Entry Required.");
-        } else if (type === 'auto') {
-            Core.state.isManualMode = false;
-            this.updateUI('lv-auto', 'lp-auto', true);
-            this.updateUI('lv-man', 'lp-man', false);
-            Core.updateLog("AI Overlord Re-engaged. Real-time Analysis Active.");
-            MatrixEngine.process();
-        } else if (type === 'stealth') {
-            Core.state.isStealthActive = !Core.state.isStealthActive;
-            this.updateUI('lv-stealth', 'lp-stealth', Core.state.isStealthActive);
-            Core.updateLog(`Stealth Protocol: ${Core.state.isStealthActive ? 'ACTIVATED' : 'DEACTIVATED'}`);
+    toggleSetting: function(type) {
+        const btn = document.getElementById(`sw-${type}`);
+        if (type === 'sync') {
+            Core.scrollSync = !Core.scrollSync;
+            btn.innerText = Core.scrollSync ? "AUTO" : "MANUAL";
+        } else if (type === 'gap') {
+            Core.gapMode = !Core.gapMode;
+            btn.innerText = Core.gapMode ? "AUTO" : "MANUAL";
+            Converter.fromText(document.getElementById('txt').value); // Re-process
         }
-    },
-
-    updateUI: function(lvId, lpId, isActive) {
-        const lv = document.getElementById(lvId);
-        const lp = document.getElementById(lpId);
-        if (isActive) {
-            lv.classList.add('active');
-            lp.classList.add('active');
-            lp.innerText = "ENGAGED";
-        } else {
-            lv.classList.remove('active');
-            lp.classList.remove('active');
-            lp.innerText = "DISCON";
-        }
+        Core.updateLog(`System Setting Changed: ${type.toUpperCase()}`);
     }
 };
 
 /**
- * [04] MULTI-AI VOICE & TEXT COORDINATION
- * Logic for AI-1 to AI-4 integration.
+ * [05] VAULT & SECRET WORLD LOGIC
  */
-const AI_Coordination = {
-    speak: function(aiNode) {
-        const prompts = {
-            "ai1": "Master Shivam, AI-1 Dashboard is ready for command.",
-            "ai2": "System Manager AI-2: All history buffers are clear.",
-            "ai3": "Designer AI-3: Carrier shape vectorization successful.",
-            "ai4": "Guardian AI-4: Vault security standing by."
-        };
-        alert(`[VOICE_EMULATION]: ${prompts[aiNode]}`);
-        Core.updateLog(`${aiNode.toUpperCase()} Mic Activated.`);
-    },
-
-    processCommand: function(nodeId, inputId) {
-        const cmd = document.getElementById(inputId).value;
-        if (!cmd) return;
-        
-        Core.updateLog(`${nodeId.toUpperCase()} Processing: ${cmd}`);
-        // Deep Logic for specific commands can be added here
-        if (cmd.includes("vault")) Hardware.flip('auto');
+function openVault() {
+    const modal = document.getElementById('vault-modal');
+    modal.classList.remove('hidden-system');
+    Core.updateLog("Secret World Access Point Triggered.");
+    
+    // GOD MODE BYPASS
+    if (Core.isAdmin) {
+        document.getElementById('vault-lock-screen').style.display = 'none';
+        document.getElementById('vault-content').classList.remove('hidden-system');
+        Core.updateLog("Admin ID recognized. Vault door opened without key.");
     }
+}
+
+function verifyVault() {
+    const pass = document.getElementById('vault-master-pass').value;
+    if (pass === "2026") {
+        document.getElementById('vault-lock-screen').style.display = 'none';
+        document.getElementById('vault-content').classList.remove('hidden-system');
+        Core.updateLog("Authentication Successful. Guardian AI standing down.");
+    } else {
+        alert("ACCESS_DENIED: INCORRECT MASTER_KEY");
+        Core.updateLog("WARNING: Intruder attempt at Vault Gate.");
+    }
+}
+
+function closeVault() {
+    document.getElementById('vault-modal').classList.add('hidden-system');
+    Core.updateLog("Vault Sealed. All buffers wiped.");
+}
+
+/**
+ * [06] DATA EXPORT (.TXT & SPECIAL CODE)
+ */
+function saveAsTxt() {
+    const txt = document.getElementById('txt').value;
+    const bin = document.getElementById('bin').value;
+    const hex = document.getElementById('hex').value;
+    const time = new Date().toLocaleString();
+    const uniqueID = "SC-" + Math.floor(Math.random() * 999999);
+
+    const content = `
+SHIVAM CYBER-CORE REPORT
+-------------------------
+TIME: ${time}
+ID: ${uniqueID}
+ADMIN: ${MASTER_ADMIN_EMAIL}
+
+SOURCE TEXT: ${txt}
+BINARY BITSTREAM: ${bin}
+HEXADECIMAL: ${hex}
+
+[END_OF_SECURE_REPORT]
+    `;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `CyberCore_${uniqueID}.txt`;
+    link.click();
+    Core.updateLog(`Report Exported: ${uniqueID}.txt saved.`);
+}
+
+/**
+ * [07] EVENT BINDERS
+ */
+CyberCore.prototype.setupEventListeners = function() {
+    // Auth
+    document.getElementById('google-login-btn').addEventListener('click', handleGoogleLogin);
+    
+    // Real-time Conversion
+    document.getElementById('txt').addEventListener('input', (e) => Converter.fromText(e.target.value));
+
+    // Scroll Sync
+    ['txt', 'bin', 'hex', 'oct'].forEach(id => {
+        document.getElementById(id).addEventListener('scroll', UI.syncScroll);
+    });
+
+    // Settings
+    document.getElementById('sw-sync').addEventListener('click', () => UI.toggleSetting('sync'));
+    document.getElementById('sw-gap').addEventListener('click', () => UI.toggleSetting('gap'));
 };
 
-/**
- * [05] VAULT SECURITY & BIOMETRIC AUTH
- * 4-Step verification and Secure Modal management.
- */
-const VaultSecurity = {
-    init: function() {
-        Core.updateLog("Biometric Scan Initialized. Laser Ready.");
-        setTimeout(() => {
-            const auth = prompt("MASTER IDENTITY VERIFICATION. Enter 4-Digit PIN:");
-            if (auth === "2026") {
-                Core.state.isVaultOpen = true;
-                document.getElementById('vault-modal').style.display = "block";
-                Core.updateLog("Biometric Match Confirmed. Welcome Master Shivam.");
-            } else {
-                Core.updateLog("WARNING: AUTHENTICATION FAILURE.");
-                alert("ACCESS DENIED!");
-            }
-        }, 1000);
-    },
-
-    close: function() {
-        Core.state.isVaultOpen = false;
-        document.getElementById('vault-modal').style.display = "none";
-        Core.updateLog("Vault Sealed. All temporary buffers wiped.");
-    }
-};
-
-/**
- * [06] GLOBAL REVISION TRACKER
- * Automatic 4-minute history cleanup as per Administrative Requirement.
- */
-setInterval(() => {
-    Core.updateLog("Executing 4-Minute Revision Buffer Cleanup...");
-    MatrixEngine.clearAll();
-    document.getElementById('txt').value = "";
-    Core.updateLog("Buffer Cleared. Privacy Preserved.");
-}, 240000); // 240,000ms = 4 minutes
-
-/**
- * [07] EVENT BINDING & INTERFACE LISTENERS
- */
-document.getElementById('txt').addEventListener('input', () => MatrixEngine.process());
-
-window.toggleManager = () => {
+function openManager() {
     document.getElementById('side-drawer').classList.toggle('active');
-    Core.updateLog("AI-2 Manager Panel Toggled.");
-};
-
-// Global Exposure for HTML Buttons
-window.flipHardware = (t) => Hardware.flip(t);
-window.startBiometric = () => VaultSecurity.init();
-window.closeVault = () => VaultSecurity.close();
-window.activateMic = (n) => AI_Coordination.speak(n);
+}
 
 /**
- * FINAL SYSTEM CHECK
+ * FINAL BOOT CHECK
  */
 window.onload = () => {
-    Core.updateLog("Shivam Cyber-Core V14: All Systems Nominal.");
+    Core.updateLog("Shivam Cyber-Core V14 Systems Nominal.");
 };
-
