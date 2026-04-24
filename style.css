@@ -1,4 +1,4 @@
-/* style.css - SHIVAM CYBER-CORE PRO V14 */
+/* style.css - SHIVAM CYBER-CORE PRO V14 - FINAL DESIGN */
 
 :root {
     --cyber-blue: #00f3ff;
@@ -12,82 +12,105 @@ body {
     color: white;
     font-family: 'Share Tech Mono', monospace;
     margin: 0;
-    padding-bottom: 60px;
+    padding-bottom: 70px;
 }
 
-/* DOUBLE BLUE STRIPS */
+/* MONITORING STRIPS */
 .blue-strip {
-    background: rgba(0, 243, 255, 0.15);
+    background: rgba(0, 243, 255, 0.1);
     border: 1px solid var(--cyber-blue);
     color: var(--cyber-blue);
-    padding: 5px 15px;
-    font-size: 12px;
+    padding: 8px;
+    font-size: 11px;
     text-align: center;
-    box-shadow: 0 0 10px var(--cyber-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
+.blue-strip.top { position: sticky; top: 0; z-index: 1000; background: black; }
+.blue-strip.bottom { position: fixed; bottom: 0; width: 100%; z-index: 1000; background: black; }
 
-.blue-strip.top { position: sticky; top: 0; z-index: 1000; }
-.blue-strip.bottom { position: fixed; bottom: 0; width: 100%; z-index: 1000; }
-
-/* CYBER BOXES (SEPARATE SECTIONS) */
-.feature-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #333;
-    border-left: 4px solid var(--cyber-blue);
-    margin: 15px;
+/* THE MATRIX GRID (ALL 4 BOXES) */
+.matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
     padding: 15px;
-    border-radius: 5px;
 }
 
-.feature-box h4 { margin-top: 0; color: var(--cyber-blue); font-size: 14px; }
-
-/* MIKE & TYPE BOX GROUP */
-.comm-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.mike-btn {
+.cyber-box {
     background: #111;
-    border: 1px solid var(--cyber-blue);
-    color: white;
+    border: 1px solid #333;
+    border-top: 2px solid var(--cyber-blue);
     padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
+    border-radius: 4px;
 }
 
-input[type="text"], input[type="password"], textarea {
+.cyber-box label {
+    display: block;
+    font-size: 10px;
+    color: var(--cyber-blue);
+    margin-bottom: 5px;
+}
+
+textarea {
     width: 100%;
-    background: #000;
-    border: 1px solid #444;
+    height: 80px;
+    background: transparent;
+    border: none;
     color: var(--neon-green);
-    padding: 10px;
+    font-family: inherit;
+    resize: none;
     outline: none;
 }
 
-/* HELICOPTER STYLE BUTTONS */
-button {
-    background: #000;
-    border: 1px solid var(--cyber-blue);
-    color: var(--cyber-blue);
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
+/* FINGERPRINT VAULT DOOR */
+.vault-container {
+    text-align: center;
+    margin: 30px 0;
 }
 
-button:hover {
-    background: var(--cyber-blue);
-    color: black;
-}
-
-/* VAULT SCANNER */
-.silver-scanner {
-    width: 80px;
-    height: 100px;
+.thumb-door {
+    width: 130px;
+    height: 160px;
     margin: 0 auto;
+    background: linear-gradient(145deg, #222, #444);
+    border: 4px solid var(--silver);
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+.silver-scanner {
+    width: 60px;
+    height: 80px;
+    margin: 20px auto 10px;
     background: url('https://img.icons8.com/ios-filled/100/ffffff/fingerprint.png') no-repeat center;
     background-size: contain;
-    filter: drop-shadow(0 0 10px var(--cyber-blue));
+    filter: drop-shadow(0 0 8px var(--cyber-blue));
 }
+
+/* MODAL BOXES & STEPS */
+.feature-box {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--cyber-blue);
+}
+
+.btn-group {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+button {
+    background: black;
+    border: 1px solid var(--cyber-blue);
+    color: var(--cyber-blue);
+    padding: 8px 12px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+button:hover { background: var(--cyber-blue); color: black; }
