@@ -11,7 +11,7 @@
     <div id="progress-container"><div id="blue-strip"></div></div>
 
     <div class="terminal-bar top">
-        <span>SESSION: #SH-2026-ADMIN-ACTIVE</span>
+        <span id="session-id">MASTER_ID: #SH-2026</span>
         <span id="live-clock">00:00:00</span>
     </div>
 
@@ -19,38 +19,59 @@
         <div id="ai-advisor">SYSTEM READY: WAITING FOR INPUT...</div>
 
         <div class="matrix-grid">
-            <div class="cyber-box"><label>TEXT</label><textarea id="txt" placeholder="Type here..."></textarea></div>
-            <div class="cyber-box"><label>BINARY</label><textarea id="bin" placeholder="0101..."></textarea></div>
-            <div class="cyber-box"><label>HEXA</label><textarea id="hex" placeholder="4A 5F..."></textarea></div>
-            <div class="cyber-box"><label>OCTAL</label><textarea id="oct" placeholder="112..."></textarea></div>
+            <div class="cyber-box">
+                <div class="box-head"><label>TEXT</label><input type="checkbox" checked id="txt-on"></div>
+                <textarea id="txt" placeholder="Enter secret message..."></textarea>
+                <div class="box-tools"><button onclick="copy('txt')">CPY</button><button onclick="clearBox('txt')">CUT</button></div>
+            </div>
+            <div class="cyber-box">
+                <div class="box-head"><label>BINARY (8-BIT)</label><input type="checkbox" checked id="bin-on"></div>
+                <textarea id="bin" readonly placeholder="01010101..."></textarea>
+                <div class="box-tools"><button onclick="copy('bin')">CPY</button></div>
+            </div>
+            <div class="cyber-box">
+                <div class="box-head"><label>HEXADECIMAL</label><input type="checkbox" checked id="hex-on"></div>
+                <textarea id="hex" readonly placeholder="4A 5F 2C..."></textarea>
+                <div class="box-tools"><button onclick="copy('hex')">CPY</button></div>
+            </div>
+            <div class="cyber-box">
+                <div class="box-head"><label>OCTAL</label><input type="checkbox" checked id="oct-on"></div>
+                <textarea id="oct" readonly placeholder="112 05..."></textarea>
+                <div class="box-tools"><button onclick="copy('oct')">CPY</button></div>
+            </div>
         </div>
 
         <div class="toggle-center">
-            <div class="toggle-group"><span>MANUAL/AUTO</span><div class="helicopter-switch" id="main-toggle" onclick="this.classList.toggle('active')"><div class="knob"></div></div></div>
-            <div class="toggle-group"><span>FINGERPRINT LOCK</span><div class="helicopter-switch" id="lock-toggle" onclick="this.classList.toggle('active')"><div class="knob"></div></div></div>
+            <div class="toggle-group"><span>ENCRYPTION MODE</span><div class="helicopter-switch" id="enc-toggle" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="toggle-group"><span>SYNC SCROLL</span><div class="helicopter-switch" id="scroll-toggle" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
         </div>
 
         <div class="scanner-trigger" onclick="openScanner()">
             <div class="fingerprint-icon">🖐️</div>
-            <p>OPEN STEGANO-VAULT</p>
+            <p>OPEN STEGANO-VAULT (SCAN/UPLOAD)</p>
+        </div>
+
+        <div class="share-area">
+            <button onclick="shareWA()" class="wa-btn">SHARE CYBER REPORT (WHATSAPP)</button>
         </div>
     </main>
 
     <div id="scanner-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeScanner()">&times;</span>
+            <h3>OMNI-SCANNER INTERFACE</h3>
             <div class="scan-options">
-                <button>📸 SCAN PHOTO</button>
-                <button>🖼️ GALLERY</button>
-                <button>📄 PDF/DOC</button>
+                <button onclick="alert('Camera Initializing...')">📸 SCAN PRINTED PHOTO</button>
+                <button onclick="alert('Opening Gallery...')">🖼️ UPLOAD FROM GALLERY</button>
+                <button onclick="alert('Opening PDF...')">📄 UPLOAD PDF/DOC</button>
             </div>
-            <input type="text" placeholder="Photo Name/ID">
-            <input type="password" placeholder="Enter Security Key">
-            <button class="btn-primary">DECRYPT</button>
+            <input type="text" id="photo-name" placeholder="Enter Photo Name/ID (Optional)">
+            <input type="password" id="master-pass" placeholder="Enter Secret Key">
+            <button class="btn-primary" onclick="alert('Decrypting...')">DECRYPT IMAGE PIXELS</button>
         </div>
     </div>
 
-    <div class="terminal-bar bottom">> MASTER_ACCESS: READY</div>
+    <div class="terminal-bar bottom">> SYSTEM_STATUS: ENCRYPTED | DEVELOPER: SHIVAM</div>
     <script src="script.js"></script>
 </body>
 </html>
