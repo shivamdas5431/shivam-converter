@@ -3,40 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIVAM CYBER-CORE V14 PRO</title>
+    <title>SHIVAM CYBER-CORE PRO V14</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="progress-container"><div id="blue-strip"></div></div>
+    <div class="blue-strip top">SYSTEM STATUS: READY | ADMIN: SHIVAM</div>
 
-    <div class="terminal-bar top">
-        <span>MASTER_SESSION: #SH-2026</span>
+    <div class="terminal-bar">
+        <div class="ai-unit">
+            <span>AI-1 (Dashboard)</span>
+            <div class="comm-group">
+                <button class="mike-btn">🎤</button>
+                <input type="text" placeholder="Dashboard order...">
+            </div>
+        </div>
         <div class="three-dots" onclick="toggleMenu()">⋮</div>
     </div>
 
-    <div id="side-menu" class="side-panel">
-        <div id="ai-2-info">AI-2: MASTER CONTROLLER</div>
-        <hr>
-        <button onclick="shareWA()">📤 SHARE REPORT (WA)</button>
-        <button onclick="downloadTXT()">📥 DOWNLOAD TXT</button>
-        <button onclick="openHistory()">📜 HISTORY & LOGS</button>
-    </div>
-
     <main class="dashboard">
-        <div id="ai-1-monitor">AI-1 MONITOR: SYSTEM READY</div>
-
         <div class="matrix-grid">
-            <div class="cyber-box"><label>TEXT</label><textarea id="txt" placeholder="Paste/Type here..."></textarea></div>
+            <div class="cyber-box"><label>TEXT</label><textarea id="txt"></textarea></div>
             <div class="cyber-box"><label>BINARY</label><textarea id="bin" readonly></textarea></div>
-            <div class="cyber-box"><label>HEX</label><textarea id="hex" readonly></textarea></div>
-            <div class="cyber-box"><label>OCTAL</label><textarea id="oct" readonly></textarea></div>
         </div>
 
         <div class="vault-container">
             <div class="thumb-door" onclick="openVault()">
                 <div class="silver-scanner"></div>
-                <p>THUMB SCANNER ENTRY</p>
+                <p>VAULT ACCESS</p>
             </div>
         </div>
     </main>
@@ -44,22 +37,45 @@
     <div id="vault-modal" class="modal">
         <div class="modal-content cyber-blue-box">
             <span class="close" onclick="closeVault()">&times;</span>
-            <div id="ai-3-guardian">AI-3: VAULT GUARDIAN ACTIVE</div>
             
-            <div class="scan-grid">
-                <button>📸 LIVE CAMERA SCAN</button>
-                <button>🖼️ GALLERY IMPORT</button>
-                <button>🎵 AUDIO/WA FILE</button>
-                <button>🎥 VIDEO ATTACH</button>
+            <div class="feature-box" id="step-1">
+                <h4>📥 STEP 1: SELECT FILE & SOURCE</h4>
+                <div class="btn-group">
+                    <button>WA</button><button>GALLERY</button><button>FILES</button>
+                </div>
+                <input type="text" placeholder="Enter File Password (if any)">
+                <p class="desc">Kahan se file uthani hai aur uska password kya hai?</p>
             </div>
 
-            <div class="export-section">
-                <h4>EXPORT & HIDE</h4>
-                <input type="text" id="ai-prompt" placeholder="Type shape (e.g. Elephant, Space, Car)...">
-                <button class="btn-gen" onclick="generateAIImage()">GENERATE & HIDE DATA</button>
+            <div class="feature-box" id="step-2">
+                <h4>🖼️ STEP 2: CHOOSE TARGET IMAGE</h4>
+                <div class="btn-group">
+                    <button onclick="showManual()">UPLOAD MINE</button>
+                    <button onclick="showAI()">AI GENERATE</button>
+                </div>
+                <div id="ai-gen-input" style="display:none; margin-top:10px;">
+                    <input type="text" placeholder="Describe shape (e.g. Elephant in Space)">
+                    <p class="desc">AI kya design banaye?</p>
+                </div>
+            </div>
+
+            <div class="feature-box" id="step-3">
+                <h4>🖨️ STEP 3: PRINT STYLE</h4>
+                <div class="btn-group">
+                    <button style="background: #333; color: white;">BLACK & WHITE</button>
+                    <button style="background: linear-gradient(to right, red, blue); color: white;">COLOUR</button>
+                </div>
+                <p class="desc">B&W sasta print ya Rangeen mahanga print?</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>📸 MANUAL SCANNER</h4>
+                <button class="scan-main-btn">ACTIVATE LASER SCANNER</button>
             </div>
         </div>
     </div>
+
+    <div class="blue-strip bottom">LOGS: Monitoring Active | REVISION: 4m Memory Clear</div>
 
     <script src="script.js"></script>
 </body>
