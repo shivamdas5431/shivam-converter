@@ -3,84 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shivam Ultimate Pro - Final Fix</title>
+    <title>SHIVAM CYBER-MASTER ULTIMATE V5.0</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
     <style>
-        :root { --neon: #39ff14; --bg: #0a0a0a; --err: #ff4444; --blue: #00f3ff; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 480px; background: #111; border: 2px solid var(--neon); padding: 20px; border-radius: 20px; box-shadow: 0 0 20px rgba(57,255,20,0.1); text-align: center; }
-        
-        .input-group { margin-bottom: 15px; text-align: left; position: relative; }
-        .label { font-size: 10px; font-weight: bold; margin-bottom: 5px; display: block; text-transform: uppercase; color: #888; }
-        
-        textarea { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px 75px 12px 12px; border-radius: 10px; font-size: 14px; outline: none; box-sizing: border-box; transition: 0.3s; font-family: monospace; resize: none; min-height: 60px; }
-        .invalid { border-color: var(--err) !important; }
+        :root {
+            --cyber: #00f3ff;
+            --neon: #39ff14;
+            --bg: #030303;
+            --err: #ff003c;
+            --purp: #bc13fe;
+            --gold: #ffd700;
+        }
 
-        .controls { position: absolute; right: 8px; top: 22px; display: flex; flex-direction: column; gap: 4px; z-index: 5; }
-        .box-btn { font-size: 9px; background: #222; color: #aaa; border: 1px solid #444; padding: 2px 5px; border-radius: 4px; cursor: pointer; }
-        .btn-x { color: var(--err) !important; border-color: #500 !important; }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
 
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        button.main { padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; font-size: 12px; }
-        .btn-clear-all { background: var(--err); color: white; grid-column: span 2; }
-        .btn-wa { background: #25D366; color: white; }
-        .btn-file { background: var(--blue); color: black; }
-        
-        /* Chota Copy Alert */
-        #toast { visibility: hidden; min-width: 150px; background-color: var(--neon); color: black; text-align: center; border-radius: 5px; padding: 8px; position: fixed; z-index: 100; bottom: 30px; font-size: 12px; font-weight: bold; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 1.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        /* --- Cyber Boot Animation --- */
+        #boot-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; z-index: 10000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+        }
+        .matrix-text { color: var(--neon); font-size: 10px; line-height: 1; }
+
+        /* --- Layout --- */
+        .app-wrapper {
+            width: 95%; max-width: 700px; margin: 30px auto;
+            border: 1px solid var(--cyber);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px; border-radius: 5px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.1);
+            position: relative;
+        }
+
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--cyber);
+            padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .header h1 { font-size: 18px; letter-spacing: 4px; color: var(--cyber); margin: 0; }
+
+        /* --- Voice Mic Button --- */
+        .mic-container { margin: 15px 0; display: flex; justify-content: center; }
+        .mic-btn {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: transparent; border: 2px solid var(--cyber);
+            color: var(--cyber); font-size: 24px; cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .mic-btn.listening {
+            border-color: var(--err); color: var(--err);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 25px var(--err); } 100% { transform: scale(1); } }
+
+        /* --- Sidebar (The Vault) --- */
+        #vault {
+            position: fixed; right: -400px; top: 0; width: 350px; height: 100%;
+            background: #080808; border-left: 1px solid var(--cyber);
+            transition: 0.5s ease; z-index: 999; padding: 25px; overflow-y: auto;
+        }
+        #vault.active { right: 0; }
+        .vault-head { font-size: 20px; color: var(--cyber); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+
+        /* --- Input Fields --- */
+        .box { position: relative; margin-bottom: 25px; }
+        .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        textarea {
+            width: 100%; background: #000; border: 1px solid #333;
+            color: #fff; padding: 15px; padding-right: 80px;
+            font-family: inherit; font-size: 14px; border-left: 4px solid var(--cyber);
+            outline: none; resize: none; min-height: 70px;
+        }
+        textarea:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(57, 255, 20, 0.1); }
+        .invalid { border-color: var(--err) !important; color: var(--err); }
+
+        .tools { position: absolute; right: 10px; top: 28px; display: flex; flex-direction: column; gap: 5px; }
+        .t-btn { background: #111; border: 1px solid #444; color: #777; font-size: 10px; padding: 3px 6px; cursor: pointer; }
+        .t-btn:hover { color: var(--neon); border-color: var(--neon); }
+
+        /* --- AI Suggestion Box --- */
+        #ai-suggestion {
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px dashed var(--cyber);
+            padding: 12px; margin-bottom: 20px;
+            font-size: 12px; color: var(--cyber); line-height: 1.5;
+            display: none;
+        }
+
+        /* --- Buttons --- */
+        .grid-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-action {
+            background: transparent; border: 1px solid var(--cyber);
+            color: var(--cyber); padding: 12px; cursor: pointer;
+            font-family: inherit; text-transform: uppercase; font-size: 12px;
+        }
+        .btn-action:hover { background: var(--cyber); color: black; box-shadow: 0 0 15px var(--cyber); }
+        .btn-wa { border-color: #25D366; color: #25D366; }
+        .btn-wa:hover { background: #25D366; color: white; }
+
+        /* --- Lock Feature --- */
+        .lock-section { border-top: 1px solid #222; margin-top: 20px; padding-top: 15px; }
+        .lock-toggle { display: flex; align-items: center; gap: 10px; color: var(--gold); font-size: 12px; }
+        input[type="password"] { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 10px; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
-    <div id="toast">Copied!</div>
 
-    <div id="login-box" class="container" style="margin-top: 50px;">
-        <h2 style="color: var(--neon);">SHIVAM CONVERTER</h2>
-        <button onclick="login()" class="main" style="background:var(--neon); width:100%;">LOGIN WITH GOOGLE</button>
+    <div id="boot-screen">
+        <div id="matrix" class="matrix-text"></div>
+        <div style="color: var(--cyber); margin-top: 20px;">[ SYSTEM BOOTING: SHIVAM CYBER-CORE ]</div>
     </div>
 
-    <div id="app-main" class="container" style="display:none;">
-        <h2 style="color: var(--neon); margin-bottom: 15px;">SHIVAM SMART PRO</h2>
+    <div id="vault">
+        <div class="vault-head">THE VAULT (⋮)</div>
         
-        <div class="input-group">
-            <span class="label" style="color: yellow;">Input (Text or Number)</span>
-            <div class="controls">
-                <button class="box-btn" onclick="copyIt('txt')">Copy</button>
-                <button class="box-btn btn-x" onclick="clearOne('txt')">X</button>
+        <div class="lock-section">
+            <div class="lock-toggle">
+                <input type="checkbox" id="lock-on" onchange="toggleLockInput()">
+                <label>ENABLE ENCRYPTION KEY (OPTIONAL)</label>
             </div>
-            <textarea id="txt" placeholder="Write 32 or Text..." oninput="sync('txt')"></textarea>
+            <input type="password" id="cipher-key" placeholder="Enter Security Code...">
         </div>
 
-        <div class="input-group">
-            <span class="label" style="color: var(--neon);">Binary</span>
-            <div class="controls">
-                <button class="box-btn" onclick="copyIt('bin')">Copy</button>
-                <button class="box-btn btn-x" onclick="clearOne('bin')">X</button>
-            </div>
-            <textarea id="bin" placeholder="Binary Code..." oninput="sync('bin')"></textarea>
+        <div style="margin-top: 30px;">
+            <label style="font-size: 10px; color: #555;">HISTORY LOGS</label>
+            <div id="history-list" style="margin-top: 10px; max-height: 250px; overflow-y: auto;"></div>
         </div>
 
-        <div class="input-group">
-            <span class="label" style="color: var(--blue);">Hexadecimal</span>
-            <div class="controls">
-                <button class="box-btn" onclick="copyIt('hex')">Copy</button>
-                <button class="box-btn btn-x" onclick="clearOne('hex')">X</button>
-            </div>
-            <textarea id="hex" placeholder="Hex Code..." oninput="sync('hex')"></textarea>
+        <button class="btn-action" style="width:100%; margin-top: 20px; border-color: var(--neon); color: var(--neon);" onclick="batchPDFDownload()">DOWNLOAD MASTER PDF</button>
+        <button class="btn-action" style="width:100%; margin-top: 10px; border-color: var(--err); color: var(--err);" onclick="auth.signOut().then(()=>location.reload())">TERMINATE SESSION</button>
+        <button class="btn-action" style="width:100%; margin-top: 20px;" onclick="toggleVault()">CLOSE VAULT</button>
+    </div>
+
+    <div id="login-box" class="app-wrapper" style="text-align: center; margin-top: 100px;">
+        <h1 style="color: var(--cyber);">ACCESS RESTRICTED</h1>
+        <button class="btn-action" style="margin-top: 20px;" onclick="login()">AUTHORIZE VIA GOOGLE</button>
+    </div>
+
+    <div id="app-main" class="app-wrapper" style="display: none;">
+        <div class="header">
+            <h1>SHIVAM MASTER PRO</h1>
+            <span style="font-size: 24px; color: var(--cyber); cursor: pointer;" onclick="toggleVault()">⋮</span>
         </div>
 
-        <div class="btn-grid">
-            <button class="main btn-file" onclick="downloadTxt()">DOWNLOAD TXT</button>
-            <button class="main btn-wa" onclick="shareWA()">WHATSAPP</button>
-            <button class="main btn-clear-all" onclick="clearAll()">SAB MITAYEIN</button>
+        <div id="ai-suggestion"></div>
+
+        <div class="mic-container">
+            <button id="mic-trigger" class="mic-btn" onclick="startVoice()">🎙️</button>
         </div>
-        <button onclick="auth.signOut().then(()=>location.reload())" style="background:none; border:none; color:#555; margin-top:10px; cursor:pointer; font-size:10px;">LOGOUT</button>
+
+        <div class="box">
+            <span class="label" style="color: var(--gold);">NORMAL INPUT (TEXT / 32-NUM)</span>
+            <div class="tools">
+                <button class="t-btn" onclick="copy('txt')">COPY</button>
+                <button class="t-btn" style="color:red" onclick="wipe('txt')">X</button>
+            </div>
+            <textarea id="txt" oninput="sync('txt')" placeholder="Analyze..."></textarea>
+        </div>
+
+        <div class="box">
+            <span class="label" style="color: var(--neon);">BINARY BITSTREAM</span>
+            <div class="tools">
+                <button class="t-btn" onclick="copy('bin')">COPY</button>
+                <button class="t-btn" style="color:red" onclick="wipe('bin')">X</button>
+            </div>
+            <textarea id="bin" oninput="sync('bin')" placeholder="0101..."></textarea>
+        </div>
+
+        <div class="box">
+            <span class="label" style="color: var(--cyber);">HEXADECIMAL MAP</span>
+            <div class="tools">
+                <button class="t-btn" onclick="copy('hex')">COPY</button>
+                <button class="t-btn" style="color:red" onclick="wipe('hex')">X</button>
+            </div>
+            <textarea id="hex" oninput="sync('hex')" placeholder="4A 53..."></textarea>
+        </div>
+
+        <div class="box">
+            <span class="label" style="color: var(--purp);">OCTAL ARRAY</span>
+            <div class="tools">
+                <button class="t-btn" onclick="copy('oct')">COPY</button>
+                <button class="t-btn" style="color:red" onclick="wipe('oct')">X</button>
+            </div>
+            <textarea id="oct" oninput="sync('oct')" placeholder="112..."></textarea>
+        </div>
+
+        <div class="grid-actions">
+            <button class="btn-action" onclick="saveTxt()">DOWNLOAD TXT</button>
+            <button class="btn-action btn-wa" onclick="shareWhatsApp()">WHATSAPP SHARE</button>
+            <button class="btn-action" style="grid-column: span 2; border-color: var(--err); color: var(--err);" onclick="globalWipe()">GLOBAL ERASE (SAB MITAYEIN)</button>
+        </div>
     </div>
 
     <script>
+        // Matrix Effect
+        const matrixBox = document.getElementById('matrix');
+        setInterval(() => {
+            let str = "";
+            for(let i=0; i<300; i++) str += Math.round(Math.random());
+            matrixBox.innerText = str;
+        }, 50);
+        setTimeout(() => { document.getElementById('boot-screen').style.display='none'; }, 2500);
+
+        // Firebase & Auth
         const firebaseConfig = {
             apiKey: "AIzaSyCHpXAaOOpppB95h2mrwQKGSvuasqSwQt8",
             authDomain: "shivam-code-converter.firebaseapp.com",
@@ -91,75 +232,101 @@
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        
-        // FIX: Stronger Persistence
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-        function login() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).catch(() => auth.signInWithRedirect(provider));
+        function login() { const p = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(p); }
+        auth.onAuthStateChanged(u => { if(u){ document.getElementById('login-box').style.display='none'; document.getElementById('app-main').style.display='block'; } });
+
+        // Voice AI
+        function startVoice() {
+            const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if(!Speech) return alert("Mic not supported");
+            const rec = new Speech();
+            rec.onstart = () => document.getElementById('mic-trigger').classList.add('listening');
+            rec.onresult = (e) => {
+                const result = e.results[0][0].transcript;
+                document.getElementById('txt').value = result;
+                sync('txt');
+            };
+            rec.onend = () => document.getElementById('mic-trigger').classList.remove('listening');
+            rec.start();
         }
 
-        auth.onAuthStateChanged(user => {
-            if(user) {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('app-main').style.display = 'block';
-            }
-        });
+        // Logic Engine
+        let historyStore = [];
+        function sync(id) {
+            const val = document.getElementById(id).value.trim();
+            const ai = document.getElementById('ai-suggestion');
+            if(!val) { globalWipe(); return; }
 
-        function sync(src) {
-            let t = document.getElementById('txt'), b = document.getElementById('bin'),
-                h = document.getElementById('hex');
-            let val = document.getElementById(src).value.trim();
-            if(!val) { clearAll(); return; }
+            ai.style.display = "block";
+            ai.innerText = `[AI ANALYZING]: Recognized ${id.toUpperCase()} stream. Converting...`;
 
             try {
-                let decValue;
-                if(src === 'txt') {
-                    // Smart Logic: Check if it's a number like 32
-                    decValue = !isNaN(val) ? parseInt(val) : val;
-                } else if(src === 'bin') {
-                    decValue = parseInt(val.replace(/\s/g,''), 2);
-                } else if(src === 'hex') {
-                    decValue = parseInt(val.replace(/\s/g,''), 16);
+                let data = "";
+                if(id === 'txt') {
+                    data = (!isNaN(val) && val.length < 6) ? parseInt(val) : val;
+                } else if(id === 'bin') {
+                    data = val.replace(/\s/g,'').match(/.{1,8}/g).map(b => String.fromCharCode(parseInt(b,2))).join('');
+                } else if(id === 'hex') {
+                    data = val.replace(/\s/g,'').match(/.{1,2}/g).map(h => String.fromCharCode(parseInt(h,16))).join('');
+                } else if(id === 'oct') {
+                    data = val.split(' ').map(o => String.fromCharCode(parseInt(o,8))).join('');
                 }
 
-                if(typeof decValue === 'number') {
-                    if(src !== 'txt') t.value = decValue;
-                    if(src !== 'bin') b.value = decValue.toString(2).padStart(8, '0');
-                    if(src !== 'hex') h.value = decValue.toString(16).toUpperCase();
-                } else {
-                    // Normal Text Logic
-                    if(src !== 'bin') b.value = val.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
-                    if(src !== 'hex') h.value = val.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
-                }
-            } catch(e) {}
+                updateBoxes(data, id);
+                if(data.length > 2) addHistory(data);
+            } catch(e) { ai.innerText = "[SYSTEM ERROR]: Invalid encoding detected."; }
         }
 
-        function showToast() {
-            let x = document.getElementById("toast");
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+        function updateBoxes(data, src) {
+            const boxes = { t: document.getElementById('txt'), b: document.getElementById('bin'), h: document.getElementById('hex'), o: document.getElementById('oct') };
+            if(typeof data === 'number') {
+                if(src !== 'txt') boxes.t.value = data;
+                boxes.b.value = data.toString(2).padStart(8, '0');
+                boxes.h.value = data.toString(16).toUpperCase();
+                boxes.o.value = data.toString(8);
+            } else {
+                if(src !== 'txt') boxes.t.value = data;
+                boxes.b.value = data.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+                boxes.h.value = data.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
+                boxes.o.value = data.split('').map(c => c.charCodeAt(0).toString(8)).join(' ');
+            }
         }
 
-        function copyIt(id) {
-            let txt = document.getElementById(id).value;
-            if(!txt) return;
-            navigator.clipboard.writeText(txt).then(() => { showToast(); });
+        // Vault Features
+        function toggleVault() { document.getElementById('vault').classList.toggle('active'); }
+        function toggleLockInput() { document.getElementById('cipher-key').style.display = document.getElementById('lock-on').checked ? "block" : "none"; }
+        
+        function addHistory(text) {
+            if(!historyStore.includes(text)) {
+                historyStore.unshift(text);
+                if(historyStore.length > 8) historyStore.pop();
+                renderHistory();
+            }
         }
 
-        function clearOne(id) { document.getElementById(id).value = ""; sync(id); }
-        function clearAll() { ['txt', 'bin', 'hex'].forEach(id => document.getElementById(id).value = ""); }
-        function downloadTxt() {
-            let content = `SHIVAM REPORT\nTEXT/NUM: ${document.getElementById('txt').value}\nBIN: ${document.getElementById('bin').value}`;
-            let blob = new Blob([content], { type: 'text/plain' });
-            let a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'shivam.txt';
-            a.click();
+        function renderHistory() {
+            document.getElementById('history-list').innerHTML = historyStore.map(h => `<div style="background:#111; padding:8px; margin:5px 0; font-size:11px; color:var(--cyber);">> ${h}</div>`).join('');
         }
-        function shareWA() {
-            let msg = `*SHIVAM REPORT*\n*Input:* ${document.getElementById('txt').value}\n*Bin:* ${document.getElementById('bin').value}`;
+
+        function batchPDFDownload() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("SHIVAM MASTER HISTORY REPORT", 10, 10);
+            historyStore.forEach((h, i) => doc.text(`${i+1}. DATA: ${h}`, 10, 20 + (i*10)));
+            doc.save("Master_History.pdf");
+        }
+
+        function wipe(id) { document.getElementById(id).value = ""; sync(id); }
+        function globalWipe() { ['txt','bin','hex','oct'].forEach(id => document.getElementById(id).value = ""); document.getElementById('ai-suggestion').style.display='none'; }
+        function copy(id) { navigator.clipboard.writeText(document.getElementById(id).value); alert("SECURELY COPIED"); }
+        function saveTxt() { 
+            const blob = new Blob([document.getElementById('txt').value + "\n" + document.getElementById('bin').value], {type:'text/plain'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'CyberReport.txt'; a.click();
+        }
+        function shareWhatsApp() {
+            const msg = `*SHIVAM CYBER REPORT*\n*Input:* ${document.getElementById('txt').value}\n*Bin:* ${document.getElementById('bin').value}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`);
         }
     </script>
