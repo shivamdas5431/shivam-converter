@@ -1,118 +1,150 @@
-/* style.css - THE CYBER DESIGN */
+/* style.css - SHIVAM CYBER-CORE PRO V14 */
+
 :root {
-    --cyber: #00f3ff;
-    --neon: #39ff14;
-    --bg: #050505;
+    --cyber-blue: #00f3ff;
+    --neon-green: #39ff14;
+    --silver: #c0c0c0;
+    --dark-bg: #050505;
 }
 
 body {
-    background-color: var(--bg);
+    background: var(--dark-bg);
     color: white;
     font-family: 'Share Tech Mono', monospace;
     margin: 0;
-    overflow-y: auto;
+    padding-bottom: 50px;
 }
 
-/* TOP NEON STRIP */
-#progress-container {
-    position: fixed;
-    top: 28px;
-    width: 100%;
-    height: 4px;
-    background: rgba(0,0,0,0.5);
+/* 3-DOT MENU POSITIONING */
+.terminal-bar.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #000;
+    border-bottom: 2px solid var(--cyber-blue);
+    position: sticky;
+    top: 0;
     z-index: 1000;
 }
 
-#blue-strip {
-    width: 30%;
-    height: 100%;
-    background: var(--cyber);
-    box-shadow: 0 0 15px var(--cyber);
+.three-dots {
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--cyber-blue);
+    line-height: 1;
 }
 
-/* TERMINAL BARS */
-.terminal-bar {
-    width: 100%;
-    height: 28px;
-    background: #000;
-    border-bottom: 1px solid var(--cyber);
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 15px;
-    font-size: 12px;
-    color: var(--cyber);
+/* SIDE PANEL (AI-2) */
+.side-panel {
     position: fixed;
-    z-index: 1001;
+    right: -280px;
+    top: 0;
+    width: 260px;
+    height: 100%;
+    background: rgba(0, 8, 15, 0.98);
+    border-left: 2px solid var(--cyber-blue);
+    padding: 25px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2000;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
 }
 
-.bottom { bottom: 0; border-top: 1px solid var(--cyber); border-bottom: none; }
+.side-panel.active { right: 0; }
 
-/* MATRIX BOXES */
-.dashboard { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
-
+/* MATRIX GRID LAYOUT */
 .matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    padding: 20px;
 }
 
 .cyber-box {
     background: rgba(255,255,255,0.02);
-    border: 1px solid #333;
-    padding: 15px;
-    border-radius: 5px;
+    border: 1px solid #222;
+    padding: 10px;
+    border-radius: 8px;
 }
-
-.cyber-box label { font-size: 10px; color: var(--cyber); display: block; margin-bottom: 8px; }
 
 textarea {
     width: 100%;
     height: 100px;
     background: #000;
-    border: 1px solid #222;
-    color: #fff;
+    border: 1px solid #333;
+    color: var(--neon-green);
+    border-left: 4px solid var(--cyber-blue);
+    padding: 10px;
     font-family: inherit;
-    border-left: 3px solid var(--cyber);
     outline: none;
+    box-sizing: border-box;
 }
 
-/* HELICOPTER SWITCHES */
-.toggle-center { display: flex; justify-content: center; gap: 40px; margin: 30px 0; }
-
-.helicopter-switch {
-    width: 35px;
-    height: 60px;
-    background: #111;
-    border: 2px solid #333;
-    position: relative;
-    cursor: pointer;
+/* THE SILVER THUMB VAULT DOOR */
+.vault-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
 }
 
-.knob {
-    width: 25px;
-    height: 25px;
-    background: #222;
-    position: absolute;
-    left: 3px;
-    top: 5px;
-    transition: 0.2s;
-}
-
-.helicopter-switch.active .knob {
-    top: 26px;
-    background: var(--neon);
-    box-shadow: 0 0 10px var(--neon);
-}
-
-/* FINGERPRINT BUTTON */
-.scanner-trigger {
-    background: #0a0a0a;
-    border: 2px solid var(--cyber);
-    padding: 20px;
+.thumb-door {
+    width: 150px;
+    height: 180px;
+    background: linear-gradient(145deg, #2a2a2a, #555, #2a2a2a);
+    border: 5px solid var(--silver);
+    border-radius: 20px;
     text-align: center;
-    border-radius: 15px;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.fingerprint-icon { font-size: 40px; filter: drop-shadow(0 0 10px var(--cyber)); }
+.silver-scanner {
+    width: 70px;
+    height: 90px;
+    background: url('https://img.icons8.com/ios-filled/100/ffffff/fingerprint.png') no-repeat center;
+    background-size: contain;
+    filter: drop-shadow(0 0 8px var(--cyber-blue));
+    margin-bottom: 10px;
+}
+
+.thumb-door p {
+    font-size: 11px;
+    color: var(--silver);
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* MODAL FIX */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 3000;
+}
+
+.modal-content.cyber-blue-box {
+    background: #000b15;
+    border: 2px solid var(--cyber-blue);
+    width: 85%;
+    max-width: 450px;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.scan-grid button {
+    background: transparent;
+    border: 1px solid var(--cyber-blue);
+    color: var(--cyber-blue);
+    padding: 12px 5px;
+    font-size: 11px;
+    cursor: pointer;
+    margin: 5px;
+}
