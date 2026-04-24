@@ -1,0 +1,118 @@
+/* style.css - THE CYBER DESIGN */
+:root {
+    --cyber: #00f3ff;
+    --neon: #39ff14;
+    --bg: #050505;
+}
+
+body {
+    background-color: var(--bg);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    margin: 0;
+    overflow-y: auto;
+}
+
+/* TOP NEON STRIP */
+#progress-container {
+    position: fixed;
+    top: 28px;
+    width: 100%;
+    height: 4px;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+#blue-strip {
+    width: 30%;
+    height: 100%;
+    background: var(--cyber);
+    box-shadow: 0 0 15px var(--cyber);
+}
+
+/* TERMINAL BARS */
+.terminal-bar {
+    width: 100%;
+    height: 28px;
+    background: #000;
+    border-bottom: 1px solid var(--cyber);
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    font-size: 12px;
+    color: var(--cyber);
+    position: fixed;
+    z-index: 1001;
+}
+
+.bottom { bottom: 0; border-top: 1px solid var(--cyber); border-bottom: none; }
+
+/* MATRIX BOXES */
+.dashboard { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
+
+.matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.cyber-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid #333;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.cyber-box label { font-size: 10px; color: var(--cyber); display: block; margin-bottom: 8px; }
+
+textarea {
+    width: 100%;
+    height: 100px;
+    background: #000;
+    border: 1px solid #222;
+    color: #fff;
+    font-family: inherit;
+    border-left: 3px solid var(--cyber);
+    outline: none;
+}
+
+/* HELICOPTER SWITCHES */
+.toggle-center { display: flex; justify-content: center; gap: 40px; margin: 30px 0; }
+
+.helicopter-switch {
+    width: 35px;
+    height: 60px;
+    background: #111;
+    border: 2px solid #333;
+    position: relative;
+    cursor: pointer;
+}
+
+.knob {
+    width: 25px;
+    height: 25px;
+    background: #222;
+    position: absolute;
+    left: 3px;
+    top: 5px;
+    transition: 0.2s;
+}
+
+.helicopter-switch.active .knob {
+    top: 26px;
+    background: var(--neon);
+    box-shadow: 0 0 10px var(--neon);
+}
+
+/* FINGERPRINT BUTTON */
+.scanner-trigger {
+    background: #0a0a0a;
+    border: 2px solid var(--cyber);
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.fingerprint-icon { font-size: 40px; filter: drop-shadow(0 0 10px var(--cyber)); }
