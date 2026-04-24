@@ -3,332 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIVAM CYBER-MASTER ULTIMATE V5.0</title>
-    
+    <title>SHIVAM CYBER-MASTER ULTIMATE V9.0</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
+    
     <style>
-        :root {
-            --cyber: #00f3ff;
-            --neon: #39ff14;
-            --bg: #030303;
-            --err: #ff003c;
-            --purp: #bc13fe;
-            --gold: #ffd700;
-        }
+        :root { --cyber: #00f3ff; --neon: #39ff14; --bg: #020202; --err: #ff003c; --purp: #bc13fe; --gold: #ffd700; --terminal: rgba(0, 0, 0, 0.95); }
+        * { box-sizing: border-box; cursor: crosshair; }
+        body { background: var(--bg); color: white; font-family: 'Share Tech Mono', monospace; margin: 0; overflow: hidden; height: 100vh; }
 
-        * { box-sizing: border-box; transition: 0.3s; }
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Share Tech Mono', monospace;
-            margin: 0;
-            overflow-x: hidden;
-            background-image: linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
+        /* --- ADVANCED CYBER UI ANIMATIONS --- */
+        .terminal-strip { position: fixed; width: 100%; height: 28px; background: var(--terminal); border-bottom: 1px solid var(--cyber); font-size: 11px; display: flex; align-items: center; padding: 0 20px; color: var(--cyber); z-index: 1000; box-shadow: 0 0 10px var(--cyber); }
+        .top-strip { top: 0; }
+        .bottom-strip { bottom: 0; border-top: 1px solid var(--cyber); border-bottom: none; }
+        
+        #boot-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .matrix-rain { color: var(--neon); font-size: 11px; line-height: 1.2; text-shadow: 0 0 5px var(--neon); text-align: center; }
 
-        /* --- Cyber Boot Animation --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: black; z-index: 10000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-        }
-        .matrix-text { color: var(--neon); font-size: 10px; line-height: 1; }
-
-        /* --- Layout --- */
-        .app-wrapper {
-            width: 95%; max-width: 700px; margin: 30px auto;
-            border: 1px solid var(--cyber);
-            background: rgba(0, 0, 0, 0.95);
-            padding: 20px; border-radius: 5px;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.1);
-            position: relative;
-        }
-
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid var(--cyber);
-            padding-bottom: 15px; margin-bottom: 20px;
-        }
-        .header h1 { font-size: 18px; letter-spacing: 4px; color: var(--cyber); margin: 0; }
-
-        /* --- Voice Mic Button --- */
-        .mic-container { margin: 15px 0; display: flex; justify-content: center; }
-        .mic-btn {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: transparent; border: 2px solid var(--cyber);
-            color: var(--cyber); font-size: 24px; cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .mic-btn.listening {
-            border-color: var(--err); color: var(--err);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 25px var(--err); } 100% { transform: scale(1); } }
-
-        /* --- Sidebar (The Vault) --- */
-        #vault {
-            position: fixed; right: -400px; top: 0; width: 350px; height: 100%;
-            background: #080808; border-left: 1px solid var(--cyber);
-            transition: 0.5s ease; z-index: 999; padding: 25px; overflow-y: auto;
-        }
+        /* --- THE VAULT SIDEBAR (V9) --- */
+        #vault { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: rgba(5,5,5,0.99); border-left: 2px solid var(--cyber); z-index: 5000; padding: 35px; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -15px 0 50px #000; backdrop-filter: blur(15px); }
         #vault.active { right: 0; }
-        .vault-head { font-size: 20px; color: var(--cyber); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 40px; color: var(--err); cursor: pointer; transition: 0.3s; }
+        .close-btn:hover { text-shadow: 0 0 20px var(--err); transform: scale(1.1); }
 
-        /* --- Input Fields --- */
-        .box { position: relative; margin-bottom: 25px; }
-        .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        textarea {
-            width: 100%; background: #000; border: 1px solid #333;
-            color: #fff; padding: 15px; padding-right: 80px;
-            font-family: inherit; font-size: 14px; border-left: 4px solid var(--cyber);
-            outline: none; resize: none; min-height: 70px;
-        }
-        textarea:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(57, 255, 20, 0.1); }
-        .invalid { border-color: var(--err) !important; color: var(--err); }
+        /* --- SYSTEM MATRIX CONTROLS --- */
+        .matrix-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #222; }
+        .label-sm { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .toggle-matrix { background: transparent; border: 1px solid var(--cyber); color: var(--cyber); padding: 5px 12px; font-size: 10px; cursor: pointer; border-radius: 2px; }
+        .toggle-matrix.active { background: var(--cyber); color: #000; box-shadow: 0 0 15px var(--cyber); }
 
-        .tools { position: absolute; right: 10px; top: 28px; display: flex; flex-direction: column; gap: 5px; }
-        .t-btn { background: #111; border: 1px solid #444; color: #777; font-size: 10px; padding: 3px 6px; cursor: pointer; }
-        .t-btn:hover { color: var(--neon); border-color: var(--neon); }
+        /* --- DASHBOARD FRAME --- */
+        .master-frame { width: 95%; max-width: 900px; margin: 60px auto; padding: 30px; border: 1px solid rgba(0, 243, 255, 0.1); background: rgba(255,255,255,0.02); position: relative; border-radius: 4px; }
+        .dashboard-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--cyber); padding-bottom: 15px; margin-bottom: 30px; }
+        
+        /* --- AI ADVISOR LOGIC --- */
+        #ai-advisor { background: rgba(57, 255, 20, 0.05); border-left: 4px solid var(--neon); padding: 15px; margin-bottom: 25px; font-size: 11px; color: var(--neon); display: none; }
 
-        /* --- AI Suggestion Box --- */
-        #ai-suggestion {
-            background: rgba(0, 243, 255, 0.05);
-            border: 1px dashed var(--cyber);
-            padding: 12px; margin-bottom: 20px;
-            font-size: 12px; color: var(--cyber); line-height: 1.5;
-            display: none;
-        }
+        /* --- INPUT GROUPS --- */
+        .cyber-box { position: relative; margin-bottom: 25px; }
+        textarea { width: 100%; background: #000; border: 1px solid #222; color: #fff; padding: 18px 100px 18px 15px; font-size: 15px; font-family: inherit; border-left: 5px solid var(--cyber); outline: none; border-radius: 4px; min-height: 90px; transition: 0.3s; }
+        textarea:focus { border-color: var(--neon); box-shadow: 0 0 20px rgba(0, 243, 255, 0.15); }
+        .tool-wrap { position: absolute; right: 12px; top: 35px; display: flex; flex-direction: column; gap: 6px; }
+        .btn-tool { background: #111; border: 1px solid #333; color: #888; font-size: 10px; padding: 5px 10px; cursor: pointer; }
+        .btn-tool:hover { color: var(--neon); border-color: var(--neon); }
 
-        /* --- Buttons --- */
-        .grid-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn-action {
-            background: transparent; border: 1px solid var(--cyber);
-            color: var(--cyber); padding: 12px; cursor: pointer;
-            font-family: inherit; text-transform: uppercase; font-size: 12px;
-        }
-        .btn-action:hover { background: var(--cyber); color: black; box-shadow: 0 0 15px var(--cyber); }
+        /* --- NLP COMMAND CENTER --- */
+        .command-center { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
+        .mic-orb { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--cyber); background: transparent; color: var(--cyber); font-size: 30px; cursor: pointer; box-shadow: 0 0 25px rgba(0, 243, 255, 0.2); transition: 0.4s; }
+        .mic-orb.active { border-color: var(--err); color: var(--err); animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 20px var(--err); } 50% { transform: scale(1.1); box-shadow: 0 0 40px var(--err); } 100% { transform: scale(1); } }
+
+        /* --- ACTION GRID --- */
+        .action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .btn-main { padding: 15px; border: 1px solid var(--cyber); background: transparent; color: var(--cyber); font-weight: bold; text-transform: uppercase; cursor: pointer; letter-spacing: 2px; }
+        .btn-main:hover { background: var(--cyber); color: #000; box-shadow: 0 0 25px var(--cyber); }
         .btn-wa { border-color: #25D366; color: #25D366; }
-        .btn-wa:hover { background: #25D366; color: white; }
+        .btn-wa:hover { background: #25D366; color: #fff; }
 
-        /* --- Lock Feature --- */
-        .lock-section { border-top: 1px solid #222; margin-top: 20px; padding-top: 15px; }
-        .lock-toggle { display: flex; align-items: center; gap: 10px; color: var(--gold); font-size: 12px; }
-        input[type="password"] { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 10px; margin-top: 10px; display: none; }
+        /* --- AUDIT HISTORY CARDS --- */
+        .audit-card { background: #080808; border: 1px solid #222; padding: 15px; margin-bottom: 12px; position: relative; border-radius: 3px; }
+        .audit-card:hover { border-color: var(--cyber); }
+        .wipe-single { position: absolute; top: 10px; right: 10px; color: var(--err); cursor: pointer; font-size: 18px; }
+        
+        /* --- GHOST PRIVACY MODE --- */
+        #privacy-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0) 4px); z-index: 10000; display: none; }
     </style>
 </head>
 <body>
 
+    <div id="privacy-overlay"></div>
+
+    <div class="terminal-strip top-strip">
+        <span id="sys-status">> SHIVAM_CYBER_OS_V9.0_CORE_ACTIVE</span>
+        <span id="live-clock" style="margin-left: auto;"></span>
+    </div>
+
     <div id="boot-screen">
-        <div id="matrix" class="matrix-text"></div>
-        <div style="color: var(--cyber); margin-top: 20px;">[ SYSTEM BOOTING: SHIVAM CYBER-CORE ]</div>
+        <div id="matrix-rain" class="matrix-rain"></div>
+        <div style="color: var(--cyber); margin-top: 30px; letter-spacing: 8px;">[ LOADING NEURAL INTERFACE ]</div>
     </div>
 
     <div id="vault">
-        <div class="vault-head">THE VAULT (⋮)</div>
+        <span class="close-btn" onclick="toggleVault()">✖</span>
+        <h2 style="color: var(--cyber); border-bottom: 1px solid #333; padding-bottom: 15px;">SYSTEM VAULT</h2>
         
-        <div class="lock-section">
-            <div class="lock-toggle">
-                <input type="checkbox" id="lock-on" onchange="toggleLockInput()">
-                <label>ENABLE ENCRYPTION KEY (OPTIONAL)</label>
-            </div>
-            <input type="password" id="cipher-key" placeholder="Enter Security Code...">
+        <div class="matrix-row"><span class="label-sm">AI Neural Engine</span><button class="toggle-matrix active" id="ai-auto" onclick="switchMode('ai-auto')">AUTO</button></div>
+        <div class="matrix-row"><span class="label-sm">NLP Mike Intelligence</span><button class="toggle-matrix active" id="mic-auto" onclick="switchMode('mic-auto')">AUTO</button></div>
+        <div class="matrix-row"><span class="label-sm">Self-Healing Bitstream</span><button class="toggle-matrix active" id="heal-auto" onclick="switchMode('heal-auto')">AUTO</button></div>
+        <div class="matrix-row"><span class="label-sm">Word Logic Mode</span><button class="toggle-matrix" id="word-mode" onclick="switchMode('word-mode')">CONTINUOUS</button></div>
+        
+        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <span class="label-sm">Security Encryption Lock</span>
+            <div class="matrix-row"><span>Vault Status</span><button class="toggle-matrix" id="lock-toggle" onclick="toggleSecretLock()">OFF</button></div>
+            <input type="password" id="secret-pass" placeholder="Enter Vault Key..." style="width: 100%; background: #000; border: 1px solid #333; color: white; padding: 12px; margin-top: 10px; display: none;">
         </div>
 
         <div style="margin-top: 30px;">
-            <label style="font-size: 10px; color: #555;">HISTORY LOGS</label>
-            <div id="history-list" style="margin-top: 10px; max-height: 250px; overflow-y: auto;"></div>
+            <span class="label-sm">Audit logs</span>
+            <div id="vault-logs" style="max-height: 200px; overflow-y: auto; margin-top: 15px;"></div>
+            <button class="btn-main" style="width: 100%; margin-top: 20px; border-color: var(--neon); color: var(--neon);" onclick="exportMasterAudit()">DOWNLOAD MASTER AUDIT</button>
+            <button class="btn-main" style="width: 100%; margin-top: 10px; border-color: var(--err); color: var(--err);" onclick="nuclearWipe()">NUCLEAR SYSTEM WIPE</button>
         </div>
-
-        <button class="btn-action" style="width:100%; margin-top: 20px; border-color: var(--neon); color: var(--neon);" onclick="batchPDFDownload()">DOWNLOAD MASTER PDF</button>
-        <button class="btn-action" style="width:100%; margin-top: 10px; border-color: var(--err); color: var(--err);" onclick="auth.signOut().then(()=>location.reload())">TERMINATE SESSION</button>
-        <button class="btn-action" style="width:100%; margin-top: 20px;" onclick="toggleVault()">CLOSE VAULT</button>
     </div>
 
-    <div id="login-box" class="app-wrapper" style="text-align: center; margin-top: 100px;">
-        <h1 style="color: var(--cyber);">ACCESS RESTRICTED</h1>
-        <button class="btn-action" style="margin-top: 20px;" onclick="login()">AUTHORIZE VIA GOOGLE</button>
+    <div id="login-frame" class="master-frame" style="text-align: center; margin-top: 150px;">
+        <h2 style="color: var(--cyber); letter-spacing: 5px;">ACCESS DENIED: IDENTITY UNKNOWN</h2>
+        <button class="btn-main" style="margin-top: 40px; width: 100%;" onclick="initLogin()">AUTHORIZE (GOOGLE CLOUD)</button>
     </div>
 
-    <div id="app-main" class="app-wrapper" style="display: none;">
-        <div class="header">
-            <h1>SHIVAM MASTER PRO</h1>
-            <span style="font-size: 24px; color: var(--cyber); cursor: pointer;" onclick="toggleVault()">⋮</span>
+    <div id="app-main" class="master-frame" style="display: none;">
+        <div class="dashboard-header">
+            <span style="color: var(--cyber); font-size: 14px;">SESSION_ID: #SH-2026</span>
+            <span style="font-size: 28px; cursor: pointer; color: var(--cyber);" onclick="toggleVault()">⋮</span>
         </div>
 
-        <div id="ai-suggestion"></div>
+        <div id="ai-advisor"></div>
 
-        <div class="mic-container">
-            <button id="mic-trigger" class="mic-btn" onclick="startVoice()">🎙️</button>
+        <div class="command-center">
+            <button id="mic-trigger" class="mic-orb" onclick="startCommandAI()">🎙️</button>
+            <div style="font-size: 10px; color: var(--cyber); margin-top: 10px;">[ COMMANDER MODE ]</div>
         </div>
 
-        <div class="box">
-            <span class="label" style="color: var(--gold);">NORMAL INPUT (TEXT / 32-NUM)</span>
-            <div class="tools">
-                <button class="t-btn" onclick="copy('txt')">COPY</button>
-                <button class="t-btn" style="color:red" onclick="wipe('txt')">X</button>
-            </div>
-            <textarea id="txt" oninput="sync('txt')" placeholder="Analyze..."></textarea>
+        <div class="cyber-box">
+            <span class="label-sm" style="color: var(--gold);">INPUT CORE (TEXT / VALUE)</span>
+            <div class="tool-wrap"><button class="btn-tool" onclick="copy('txt')">COPY</button><button class="btn-tool" style="color: red;" onclick="wipe('txt')">X</button></div>
+            <textarea id="txt" oninput="cyberSync('txt')" placeholder="Analyzing frequency..."></textarea>
         </div>
 
-        <div class="box">
-            <span class="label" style="color: var(--neon);">BINARY BITSTREAM</span>
-            <div class="tools">
-                <button class="t-btn" onclick="copy('bin')">COPY</button>
-                <button class="t-btn" style="color:red" onclick="wipe('bin')">X</button>
-            </div>
-            <textarea id="bin" oninput="sync('bin')" placeholder="0101..."></textarea>
+        <div class="cyber-box">
+            <span class="label-sm" style="color: var(--neon);">BINARY CORE (8-BIT BITSTREAM)</span>
+            <div class="tool-wrap"><button class="btn-tool" onclick="copy('bin')">COPY</button><button class="btn-tool" style="color: red;" onclick="wipe('bin')">X</button></div>
+            <textarea id="bin" oninput="cyberSync('bin')" placeholder="01010101..."></textarea>
         </div>
 
-        <div class="box">
-            <span class="label" style="color: var(--cyber);">HEXADECIMAL MAP</span>
-            <div class="tools">
-                <button class="t-btn" onclick="copy('hex')">COPY</button>
-                <button class="t-btn" style="color:red" onclick="wipe('hex')">X</button>
-            </div>
-            <textarea id="hex" oninput="sync('hex')" placeholder="4A 53..."></textarea>
+        <div class="cyber-box">
+            <span class="label-sm" style="color: var(--cyber);">HEXADECIMAL CORE</span>
+            <div class="tool-wrap"><button class="btn-tool" onclick="copy('hex')">COPY</button><button class="btn-tool" style="color: red;" onclick="wipe('hex')">X</button></div>
+            <textarea id="hex" oninput="cyberSync('hex')" placeholder="4A 4B..."></textarea>
         </div>
 
-        <div class="box">
-            <span class="label" style="color: var(--purp);">OCTAL ARRAY</span>
-            <div class="tools">
-                <button class="t-btn" onclick="copy('oct')">COPY</button>
-                <button class="t-btn" style="color:red" onclick="wipe('oct')">X</button>
-            </div>
-            <textarea id="oct" oninput="sync('oct')" placeholder="112..."></textarea>
+        <div class="action-grid">
+            <button class="btn-main" onclick="generateReport()">GENERATE AUDIT REPORT</button>
+            <button class="btn-main btn-wa" onclick="shareSecureWA()">WA SECURE SHARE</button>
+            <button class="btn-main" style="grid-column: span 2; border-color: var(--err); color: var(--err);" onclick="globalReset()">EMERGENCY SYSTEM ERASE</button>
         </div>
+    </div>
 
-        <div class="grid-actions">
-            <button class="btn-action" onclick="saveTxt()">DOWNLOAD TXT</button>
-            <button class="btn-action btn-wa" onclick="shareWhatsApp()">WHATSAPP SHARE</button>
-            <button class="btn-action" style="grid-column: span 2; border-color: var(--err); color: var(--err);" onclick="globalWipe()">GLOBAL ERASE (SAB MITAYEIN)</button>
-        </div>
+    <div class="terminal-strip bottom-strip">
+        <span id="sys-log">> SYSTEM READY... [AI: ACTIVE] [MEMORY: OK] [ENCRYPTION: ON]</span>
     </div>
 
     <script>
-        // Matrix Effect
-        const matrixBox = document.getElementById('matrix');
-        setInterval(() => {
-            let str = "";
-            for(let i=0; i<300; i++) str += Math.round(Math.random());
-            matrixBox.innerText = str;
-        }, 50);
-        setTimeout(() => { document.getElementById('boot-screen').style.display='none'; }, 2500);
+        // --- BOOT & CLOCK ---
+        const matrix = document.getElementById('matrix-rain');
+        setInterval(() => { let s = ""; for(let i=0; i<300; i++) s += Math.round(Math.random()); matrix.innerText = s; }, 50);
+        setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+        setTimeout(() => { document.getElementById('boot-screen').style.display='none'; }, 3000);
 
-        // Firebase & Auth
-        const firebaseConfig = {
-            apiKey: "AIzaSyCHpXAaOOpppB95h2mrwQKGSvuasqSwQt8",
-            authDomain: "shivam-code-converter.firebaseapp.com",
-            projectId: "shivam-code-converter",
-            storageBucket: "shivam-code-converter.firebasestorage.app",
-            messagingSenderId: "245086667262",
-            appId: "1:245086667262:web:03b2c25f37529d72ab80af"
-        };
+        // --- FIREBASE SECURITY ---
+        const firebaseConfig = { apiKey: "AIzaSyCHpXAaOOpppB95h2mrwQKGSvuasqSwQt8", authDomain: "shivam-code-converter.firebaseapp.com", projectId: "shivam-code-converter", storageBucket: "shivam-code-converter.firebasestorage.app", messagingSenderId: "245086667262", appId: "1:245086667262:web:03b2c25f37529d72ab80af" };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-        function login() { const p = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(p); }
-        auth.onAuthStateChanged(u => { if(u){ document.getElementById('login-box').style.display='none'; document.getElementById('app-main').style.display='block'; } });
+        let vaultData = JSON.parse(localStorage.getItem('shivam_vault')) || [];
 
-        // Voice AI
-        function startVoice() {
-            const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if(!Speech) return alert("Mic not supported");
-            const rec = new Speech();
-            rec.onstart = () => document.getElementById('mic-trigger').classList.add('listening');
-            rec.onresult = (e) => {
-                const result = e.results[0][0].transcript;
-                document.getElementById('txt').value = result;
-                sync('txt');
-            };
-            rec.onend = () => document.getElementById('mic-trigger').classList.remove('listening');
-            rec.start();
-        }
+        function initLogin() { const p = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(p); }
+        auth.onAuthStateChanged(u => { if(u){ document.getElementById('login-frame').style.display='none'; document.getElementById('app-main').style.display='block'; renderVault(); } });
 
-        // Logic Engine
-        let historyStore = [];
-        function sync(id) {
-            const val = document.getElementById(id).value.trim();
-            const ai = document.getElementById('ai-suggestion');
-            if(!val) { globalWipe(); return; }
+        // --- CORE SYNC ENGINE ---
+        function cyberSync(src) {
+            const t = document.getElementById('txt'), b = document.getElementById('bin'), h = document.getElementById('hex');
+            const val = document.getElementById(src).value.trim();
+            const ai = document.getElementById('ai-advisor');
+            const isAuto = document.getElementById('ai-auto').classList.contains('active');
 
-            ai.style.display = "block";
-            ai.innerText = `[AI ANALYZING]: Recognized ${id.toUpperCase()} stream. Converting...`;
+            if(!val) { globalReset(); return; }
+            if(isAuto) { ai.style.display = "block"; ai.innerText = `[AI LOGIC]: Processing stream from ${src.toUpperCase()}... Verification successful.`; }
 
             try {
                 let data = "";
-                if(id === 'txt') {
-                    data = (!isNaN(val) && val.length < 6) ? parseInt(val) : val;
-                } else if(id === 'bin') {
-                    data = val.replace(/\s/g,'').match(/.{1,8}/g).map(b => String.fromCharCode(parseInt(b,2))).join('');
-                } else if(id === 'hex') {
-                    data = val.replace(/\s/g,'').match(/.{1,2}/g).map(h => String.fromCharCode(parseInt(h,16))).join('');
-                } else if(id === 'oct') {
-                    data = val.split(' ').map(o => String.fromCharCode(parseInt(o,8))).join('');
+                // Logic Fix for Value (32) vs String
+                if(src === 'txt') {
+                    data = (!isNaN(val) && val.length < 5) ? parseInt(val) : val;
+                } else if(src === 'bin') {
+                    let clean = val.replace(/\s/g,'');
+                    if(document.getElementById('heal-auto').classList.contains('active')) clean = clean.replace(/[^01]/g, '');
+                    data = clean.match(/.{1,8}/g).map(x => String.fromCharCode(parseInt(x, 2))).join('');
+                } else if(src === 'hex') {
+                    data = val.replace(/\s/g,'').match(/.{1,2}/g).map(x => String.fromCharCode(parseInt(x, 16))).join('');
                 }
 
-                updateBoxes(data, id);
-                if(data.length > 2) addHistory(data);
-            } catch(e) { ai.innerText = "[SYSTEM ERROR]: Invalid encoding detected."; }
+                updateDashboard(data, src);
+                if(data.length > 2) saveToVault(data);
+                logSystem(`Sync Complete: ${src.toUpperCase()}`);
+            } catch(e) { ai.innerText = "[ERROR]: Bitstream mismatch detected."; }
         }
 
-        function updateBoxes(data, src) {
-            const boxes = { t: document.getElementById('txt'), b: document.getElementById('bin'), h: document.getElementById('hex'), o: document.getElementById('oct') };
+        function updateDashboard(data, src) {
+            const t = document.getElementById('txt'), b = document.getElementById('bin'), h = document.getElementById('hex');
+            const isCont = document.getElementById('word-mode').innerText === 'CONTINUOUS';
+
             if(typeof data === 'number') {
-                if(src !== 'txt') boxes.t.value = data;
-                boxes.b.value = data.toString(2).padStart(8, '0');
-                boxes.h.value = data.toString(16).toUpperCase();
-                boxes.o.value = data.toString(8);
+                if(src !== 'txt') t.value = data;
+                b.value = data.toString(2).padStart(8, '0');
+                h.value = data.toString(16).toUpperCase();
             } else {
-                if(src !== 'txt') boxes.t.value = data;
-                boxes.b.value = data.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
-                boxes.h.value = data.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
-                boxes.o.value = data.split('').map(c => c.charCodeAt(0).toString(8)).join(' ');
+                if(src !== 'txt') t.value = data;
+                b.value = data.split('').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(isCont ? '' : ' ');
+                h.value = data.split('').map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(isCont ? '' : ' ');
             }
         }
 
-        // Vault Features
+        // --- COMMANDER AI (NLP) ---
+        function startCommandAI() {
+            const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if(!Speech) return alert("System Mic offline.");
+            const rec = new Speech();
+            const mic = document.getElementById('mic-trigger');
+
+            rec.onstart = () => { mic.classList.add('active'); logSystem("AI Listening..."); };
+            rec.onresult = (e) => {
+                const cmd = e.results[0][0].transcript.toLowerCase();
+                logSystem(`COMMAND: ${cmd}`);
+
+                if(cmd.includes("manual mode")) {
+                    document.getElementById('ai-auto').classList.remove('active');
+                    logSystem("System: Manual Mode Engaged.");
+                } else if(cmd.includes("nuclear wipe")) {
+                    nuclearWipe();
+                } else {
+                    document.getElementById('txt').value = cmd; cyberSync('txt');
+                }
+            };
+            rec.onend = () => mic.classList.remove('active');
+            rec.start();
+        }
+
+        // --- SYSTEM VAULT & PDF ---
         function toggleVault() { document.getElementById('vault').classList.toggle('active'); }
-        function toggleLockInput() { document.getElementById('cipher-key').style.display = document.getElementById('lock-on').checked ? "block" : "none"; }
-        
-        function addHistory(text) {
-            if(!historyStore.includes(text)) {
-                historyStore.unshift(text);
-                if(historyStore.length > 8) historyStore.pop();
-                renderHistory();
+        function switchMode(id) { 
+            const btn = document.getElementById(id);
+            if(id === 'word-mode') btn.innerText = btn.innerText === 'CONTINUOUS' ? 'SPACED' : 'CONTINUOUS';
+            else btn.classList.toggle('active');
+        }
+
+        function saveToVault(data) {
+            if(!vaultData.some(v => v.data === data)) {
+                vaultData.unshift({ id: "AUDIT-"+Math.floor(Math.random()*999), data: data, time: new Date().toLocaleString() });
+                if(vaultData.length > 20) vaultData.pop();
+                localStorage.setItem('shivam_vault', JSON.stringify(vaultData));
+                renderVault();
             }
         }
 
-        function renderHistory() {
-            document.getElementById('history-list').innerHTML = historyStore.map(h => `<div style="background:#111; padding:8px; margin:5px 0; font-size:11px; color:var(--cyber);">> ${h}</div>`).join('');
+        function renderVault() {
+            const v = document.getElementById('vault-logs');
+            v.innerHTML = vaultData.map((l, i) => `
+                <div class="audit-card" onclick="document.getElementById('txt').value='${l.data}'; cyberSync('txt'); toggleVault();">
+                    <span class="wipe-single" onclick="deleteSingle(${i})">✖</span>
+                    <div style="color: var(--cyber); font-size: 9px;">ID: ${l.id}</div>
+                    <div style="margin-top: 5px;">${l.data.toString().substring(0,20)}...</div>
+                </div>
+            `).join('');
         }
 
-        function batchPDFDownload() {
+        function generateReport() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text("SHIVAM MASTER HISTORY REPORT", 10, 10);
-            historyStore.forEach((h, i) => doc.text(`${i+1}. DATA: ${h}`, 10, 20 + (i*10)));
-            doc.save("Master_History.pdf");
+            const t = document.getElementById('txt').value, b = document.getElementById('bin').value, h = document.getElementById('hex').value;
+            
+            doc.setFillColor(0, 0, 0); doc.rect(0, 0, 210, 297, 'F');
+            doc.setTextColor(0, 243, 255); doc.setFont("courier", "bold");
+            doc.text("SHIVAM CYBER-OS SECURITY AUDIT", 15, 20);
+            doc.setFontSize(10);
+            doc.text("AUDIT_ID: #SH-"+Date.now(), 15, 30);
+            doc.text("--------------------------------------------------", 15, 40);
+            doc.text("INPUT CORE: " + (t || "N/A"), 15, 55);
+            doc.text("BINARY DATA: " + doc.splitTextToSize(b, 170), 15, 75);
+            doc.text("HEXADECIMAL: " + h, 15, 120);
+            doc.save("Audit_Report_Secure.pdf");
         }
 
-        function wipe(id) { document.getElementById(id).value = ""; sync(id); }
-        function globalWipe() { ['txt','bin','hex','oct'].forEach(id => document.getElementById(id).value = ""); document.getElementById('ai-suggestion').style.display='none'; }
-        function copy(id) { navigator.clipboard.writeText(document.getElementById(id).value); alert("SECURELY COPIED"); }
-        function saveTxt() { 
-            const blob = new Blob([document.getElementById('txt').value + "\n" + document.getElementById('bin').value], {type:'text/plain'});
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'CyberReport.txt'; a.click();
-        }
-        function shareWhatsApp() {
-            const msg = `*SHIVAM CYBER REPORT*\n*Input:* ${document.getElementById('txt').value}\n*Bin:* ${document.getElementById('bin').value}`;
+        // --- UTILS ---
+        function logSystem(msg) { document.getElementById('sys-log').innerText = `> ${msg.toUpperCase()}`; }
+        function globalReset() { ['txt','bin','hex'].forEach(id => document.getElementById(id).value = ""); document.getElementById('ai-advisor').style.display='none'; }
+        function nuclearWipe() { if(confirm("INITIATE TOTAL DATA DESTRUCTION?")) { vaultData = []; localStorage.removeItem('shivam_vault'); renderVault(); } }
+        function deleteSingle(i) { vaultData.splice(i, 1); localStorage.setItem('shivam_vault', JSON.stringify(vaultData)); renderVault(); event.stopPropagation(); }
+        function copy(id) { navigator.clipboard.writeText(document.getElementById(id).value); logSystem("BUFFER: COPIED"); }
+        function wipe(id) { document.getElementById(id).value = ""; cyberSync(id); }
+        function shareSecureWA() { 
+            const msg = `*SHIVAM CYBER AUDIT*\n*Input:* ${document.getElementById('txt').value}\n*Binary:* ${document.getElementById('bin').value}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`);
         }
     </script>
 </body>
-</html>
+    </html>
+    
