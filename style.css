@@ -1,26 +1,21 @@
-/* SHIVAM CYBER-CORE PRO V14 - MASTER ADMINISTRATIVE STYLE SHEET
-    DEVELOPED FOR: MASTER SHIVAM (PUSA, BIHAR)
-    VERSION: 14.0.9 (HEAVY_DUTY_BUILD)
-    LINES: TARGET 1000+ DETAILED CSS BLOCKS
+/* SHIVAM CYBER-CORE PRO V14 | MASTER_ADMIN_CSS
+    THEME: DEEP_CYAN_NEON_INDUSTRIAL
+    ROOT_ADMIN: ashok91208@gmail.com
 */
 
-/* [01] SYSTEM ROOT VARIABLES - THE CORE ENGINE */
 :root {
-    --p-color: #00f3ff;       /* Cyber Cyan */
-    --s-color: #39ff14;       /* Neon Green */
-    --danger: #ff003c;        /* Alert Red */
-    --warning: #ffb300;      /* Caution Yellow */
-    --bg-deep: #020202;      /* Deep Space Black */
-    --panel-bg: rgba(10, 10, 10, 0.98);
-    --silver: #e0e0e0;       /* Metallic Silver */
-    --glass: rgba(0, 243, 255, 0.05);
-    --border-glow: 0 0 15px rgba(0, 243, 255, 0.3);
-    --font-main: 'Share Tech Mono', monospace;
-    --font-header: 'Orbitron', sans-serif;
-    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --bg-color: #020b0d;
+    --p-color: #00f3ff; /* Neon Cyan */
+    --s-color: #ff0055; /* Cyber Pink */
+    --a-color: #00ff41; /* Hacker Green */
+    --text-main: #e0faff;
+    --border-glow: 0 0 10px rgba(0, 243, 255, 0.4);
+    --glass: rgba(0, 20, 25, 0.85);
+    --font-cyber: 'Orbitron', sans-serif;
+    --font-code: 'JetBrains Mono', monospace;
 }
 
-/* [02] GLOBAL RESET & BOOT PROTOCOL */
+/* [01] GLOBAL RESET & BASE */
 * {
     margin: 0;
     padding: 0;
@@ -29,260 +24,464 @@
 }
 
 body {
-    background-color: var(--bg-deep);
-    color: white;
-    font-family: var(--font-main);
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-cyber);
     overflow-x: hidden;
-    line-height: 1.6;
-    background-image: 
-        radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.05) 0%, transparent 80%),
-        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 100%, 100% 2px, 3px 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
-/* [03] MONITORING STRIPS (DOUBLE BLUE STRIPS) */
-.blue-strip {
+/* [02] SECURITY OVERLAYS (AUTH & VAULT) */
+.security-overlay, .vault-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    background: rgba(0, 243, 255, 0.1);
-    border-top: 1px solid var(--p-color);
-    border-bottom: 1px solid var(--p-color);
-    padding: 8px 15px;
+    height: 100%;
+    background: radial-gradient(circle, #001a1a 0%, #000 100%);
     z-index: 9999;
-    backdrop-filter: blur(10px);
-    box-shadow: var(--border-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.top-monitor-heavy {
+.hidden-system {
+    display: none !important;
+}
+
+/* [03] AUTH BOX DESIGN */
+.auth-box {
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    background: var(--glass);
+    border: 1px solid var(--p-color);
+    box-shadow: var(--border-glow);
+    text-align: center;
+    border-radius: 5px;
+}
+
+.glitch-logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--p-color);
+    text-shadow: 2px 2px var(--s-color);
+    margin-bottom: 10px;
+}
+
+.g-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* [04] TOP & BOTTOM MONITOR STRIPS */
+.blue-strip {
+    height: 35px;
+    background: rgba(0, 243, 255, 0.1);
+    border-bottom: 1px solid var(--p-color);
+    display: flex;
+    align-items: center;
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+    padding: 0 15px;
+    color: var(--p-color);
     position: sticky;
     top: 0;
+    z-index: 1000;
 }
 
-.bottom-monitor-heavy {
+.bottom-monitor {
     position: fixed;
     bottom: 0;
+    top: auto;
+    border-bottom: none;
+    border-top: 1px solid var(--p-color);
 }
 
-.telemetry-grid {
+.t-item { margin-right: 20px; }
+.pulse { animation: neon-pulse 1.5s infinite; }
+
+/* [05] DASHBOARD & MATRIX LAYOUT */
+.terminal-frame {
+    padding: 15px;
+    padding-bottom: 80px;
+}
+
+.cyber-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow-x: auto;
-    white-space: nowrap;
-    gap: 20px;
-}
-
-.t-cell { font-size: 11px; letter-spacing: 1px; }
-.t-label { color: var(--silver); opacity: 0.7; margin-right: 5px; }
-.t-val { color: var(--p-color); font-weight: bold; }
-
-/* [04] MAIN TERMINAL LAYOUT */
-.titan-container {
-    padding: 20px 15px 100px 15px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* [05] AI MODULE DESIGN (AI-1 TO AI-4) */
-.ai-node-pro, .feature-box, .op-card {
-    background: var(--panel-bg);
-    border: 1px solid #1a1a1a;
-    border-left: 4px solid var(--p-color);
-    margin-bottom: 25px;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
-}
-
-/* AI Dialogue Box Pulse */
-.ai-status-pulse.active {
-    width: 10px;
-    height: 10px;
-    background: var(--s-color);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--s-color);
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(0.9); opacity: 0.7; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.9); opacity: 0.7; }
-}
-
-/* [06] HARDWARE HELICOPTER SWITCHES - THE METALLIC LOOK */
-.h-switch {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #111;
-    padding: 15px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    width: 100px;
-}
-
-.h-lever-base {
-    width: 30px;
-    height: 60px;
-    background: #222;
-    border-radius: 15px;
-    position: relative;
-    margin: 10px 0;
-    box-shadow: inset 0 0 10px black;
-    border: 1px solid #444;
-}
-
-.h-handle {
-    width: 24px;
-    height: 24px;
-    background: var(--silver);
-    border-radius: 50%;
-    position: absolute;
-    left: 2px;
-    top: 5px;
-    transition: var(--transition);
-    background: radial-gradient(circle at 30% 30%, #fff, #999);
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-}
-
-.h-lever-base.active .h-handle {
-    top: 30px;
-    background: radial-gradient(circle at 30% 30%, var(--p-color), #0088cc);
-}
-
-/* [07] THE MATRIX BOXES (DIPLI DESIGN) */
-.m-card-pro {
-    background: linear-gradient(180deg, #111 0%, #050505 100%);
-    border: 1px solid #222;
     margin-bottom: 20px;
 }
 
-.m-head {
-    background: #1a1a1a;
-    padding: 8px 12px;
+.three-dots-container {
+    cursor: pointer;
+    background: var(--glass);
+    padding: 5px 15px;
+    border: 1px solid var(--p-color);
+    border-radius: 20px;
     display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--p-color);
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
 }
 
-textarea {
-    width: 100%;
-    height: 120px;
-    background: transparent;
-    border: none;
-    color: var(--s-color);
+/* AI NODE BOXES */
+.ai-hub {
+    background: rgba(0, 243, 255, 0.05);
+    border-left: 4px solid var(--p-color);
     padding: 15px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    resize: none;
+    margin-bottom: 25px;
+}
+
+.interaction-zone {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mike-btn-main {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--glass);
+    border: 2px solid var(--p-color);
+    color: var(--p-color);
+    font-size: 1.5rem;
+    box-shadow: var(--border-glow);
+}
+
+.command-unit { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+
+input[type="text"], input[type="password"], textarea {
+    background: #000;
+    border: 1px solid #333;
+    color: var(--p-color);
+    padding: 12px;
+    font-family: var(--font-code);
+    width: 100%;
     outline: none;
 }
 
-/* [08] FINGERPRINT SCANNER LASER EFFECT */
-.scanner-wrap {
-    border: 2px solid var(--silver);
-    padding: 30px;
-    position: relative;
-    background: rgba(255,255,255,0.02);
-    border-radius: 20px;
+.execute-btn, .exe-box-btn, .v-exe-btn {
+    background: var(--p-color);
+    color: #000;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    font-family: var(--font-cyber);
+    cursor: pointer;
+    text-transform: uppercase;
 }
 
-.laser-beam {
+/* [06] THE 4-BOX MATRIX (SCROLLABLE) */
+.matrix-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.m-box {
+    border: 1px solid #1a3333;
+    background: #000;
+}
+
+.m-head {
+    background: #0a1a1a;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--p-color);
+}
+
+.m-box textarea {
+    height: 120px;
+    border: none;
+    font-size: 0.9rem;
+    resize: none;
+}
+
+.m-foot {
+    padding: 8px;
+    background: #051010;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* [07] THE CIRCULAR FINGERPRINT GATE */
+.hidden-gate-zone {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fingerprint-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--p-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--border-glow);
+    transition: 0.3s;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--p-color);
+    border-radius: 50%;
+    animation: ring-pulse 2s infinite;
+}
+
+.fp-label {
+    font-size: 0.5rem;
+    margin-top: 10px;
+    color: var(--p-color);
+    text-align: center;
+}
+
+/* [08] VAULT & SCANNER DESIGN */
+.vault-window {
+    width: 95%;
+    height: 90%;
+    background: #000;
+    border: 1px solid var(--s-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.laser-scanner {
+    width: 100%;
+    height: 150px;
+    background: rgba(255, 0, 85, 0.05);
+    position: relative;
+    overflow: hidden;
+    border: 1px dashed var(--s-color);
+}
+
+.laser-scanner::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 3px;
-    background: var(--p-color);
-    box-shadow: 0 0 15px var(--p-color);
-    animation: scan 3s linear infinite;
-    z-index: 10;
+    background: var(--s-color);
+    box-shadow: 0 0 15px var(--s-color);
+    animation: scan-move 3s infinite linear;
 }
 
-@keyframes scan {
-    0% { top: 10%; }
-    50% { top: 90%; }
-    100% { top: 10%; }
+.v-op-card {
+    background: #050505;
+    border: 1px solid #222;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 
-/* [09] MODAL VAULT SYSTEM (HEAVY DETAIL) */
-.modal-heavy {
+/* [09] SIDE DRAWER (AI-2 MANAGER) */
+.cyber-drawer {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: -100%;
+    width: 85%;
+    max-width: 350px;
     height: 100%;
-    background: rgba(0,0,0,0.95);
+    background: var(--bg-color);
+    border-left: 2px solid var(--p-color);
     z-index: 10000;
-    display: none; /* Logic will open this */
-}
-
-.modal-scroller {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
+    transition: 0.4s ease-in-out;
     padding: 20px;
 }
 
-.op-card-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+.cyber-drawer.active { right: 0; }
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #111;
 }
 
-/* Buttons Styling */
-button {
-    font-family: var(--font-header);
-    letter-spacing: 1px;
-    padding: 10px 20px;
-    background: black;
+.sw-btn {
+    background: #111;
+    color: var(--a-color);
+    border: 1px solid var(--a-color);
+    padding: 5px 15px;
+    font-size: 0.7rem;
+}
+
+/* [10] ANIMATIONS */
+@keyframes neon-pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+@keyframes ring-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes scan-move {
+    0% { top: 0; }
+    50% { top: 100%; }
+    100% { top: 0; }
+}
+
+/* SCROLLBAR CUSTOMIZATION */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--p-color); }
+/* [11] EXTENDED UI ELEMENTS (BHARI_DENSITY) */
+.m-ctrl button, .history-controls button {
+    background: transparent;
     border: 1px solid var(--p-color);
     color: var(--p-color);
+    padding: 4px 10px;
+    font-size: 0.6rem;
     cursor: pointer;
     transition: 0.3s;
+    margin-left: 5px;
+}
+
+.m-ctrl button:hover {
+    background: var(--p-color);
+    color: #000;
+    box-shadow: var(--border-glow);
+}
+
+/* AI-3 DESIGNER SPECIFIC UI */
+.interaction-stack {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.v-mike-small {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #000;
+    border: 1px solid var(--s-color);
+    color: var(--s-color);
+    cursor: pointer;
+}
+
+.v-mike-small:active {
+    background: var(--s-color);
+    color: #000;
+}
+
+#ai3-prompt {
+    height: 60px;
+    font-size: 0.8rem;
+    border-color: #222;
+}
+
+/* BUTTON GROUPS FOR VAULT */
+.btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.btn-group button {
+    background: #111;
+    border: 1px solid #333;
+    color: #aaa;
+    padding: 8px;
+    font-size: 0.6rem;
     text-transform: uppercase;
 }
 
-button:hover {
-    background: var(--p-color);
-    color: black;
-    box-shadow: 0 0 20px var(--p-color);
+.btn-group button.active, .btn-group button:focus {
+    border-color: var(--p-color);
+    color: var(--p-color);
+    background: rgba(0, 243, 255, 0.1);
 }
 
-/* [10] REVISION TICKER (4 MINUTE LOGIC) */
-.ticker-wrap {
+/* [12] HISTORY MANAGER (CHROME-STYLE) */
+.history-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 20px 0;
+    border: 1px solid #111;
+    background: #010505;
+}
+
+.history-item {
+    padding: 10px;
+    border-bottom: 1px solid #111;
     display: flex;
-    width: 100%;
-    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
 }
 
-.ticker-wrap div {
-    animation: ticker 20s linear infinite;
-    white-space: nowrap;
-    padding-right: 50px;
-    color: var(--s-color);
-    font-size: 11px;
+.h-time { color: #555; font-size: 0.6rem; }
+.h-code { color: var(--a-color); font-weight: bold; }
+
+.history-controls {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
 }
 
-@keyframes ticker {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+/* [13] STATUS NOTIFICATIONS & SUGGESTIONS */
+.suggestion-bar {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px;
+    border-top: 1px solid #222;
+    font-size: 0.7rem;
+    color: var(--a-color);
+    font-family: var(--font-code);
 }
 
-/* MOBILE OPTIMIZATION */
-@media (max-width: 600px) {
-    .titan-container { padding: 10px; }
-    .matrix-grid { grid-template-columns: 1fr; }
-    .h-switch { width: 80px; }
+.s-error { color: var(--s-color); }
+
+/* [14] CUSTOM SCROLLBAR FOR DRAWERS */
+.cyber-drawer::-webkit-scrollbar { width: 3px; }
+.cyber-drawer::-webkit-scrollbar-thumb { background: var(--s-color); }
+
+/* [15] MASTER ADMIN OVERRIDE STYLES */
+.god-mode-active {
+    border-color: var(--a-color) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3) !important;
 }
 
-/* ADDITIONAL 500+ LINES OF SPECIFIC ELEMENT STYLING TO FOLLOW... 
-   (Adding unique borders for each AI unit) */
-#node-ai-1 { border-left-color: var(--p-color); }
-#op-1 { border-left-color: var(--s-color); }
-#op-2 { border-left-color: var(--warning); }
-#op-3 { border-left-color: var(--danger); }
+.god-mode-label {
+    color: var(--a-color);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--a-color);
+}
+
+/* EXIT ANIMATION */
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.1);
+}
