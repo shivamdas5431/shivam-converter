@@ -1,116 +1,288 @@
-/* style.css - SHIVAM CYBER-CORE PRO V14 - FINAL DESIGN */
+/* SHIVAM CYBER-CORE PRO V14 - MASTER ADMINISTRATIVE STYLE SHEET
+    DEVELOPED FOR: MASTER SHIVAM (PUSA, BIHAR)
+    VERSION: 14.0.9 (HEAVY_DUTY_BUILD)
+    LINES: TARGET 1000+ DETAILED CSS BLOCKS
+*/
 
+/* [01] SYSTEM ROOT VARIABLES - THE CORE ENGINE */
 :root {
-    --cyber-blue: #00f3ff;
-    --neon-green: #39ff14;
-    --silver: #c0c0c0;
-    --dark-bg: #050505;
+    --p-color: #00f3ff;       /* Cyber Cyan */
+    --s-color: #39ff14;       /* Neon Green */
+    --danger: #ff003c;        /* Alert Red */
+    --warning: #ffb300;      /* Caution Yellow */
+    --bg-deep: #020202;      /* Deep Space Black */
+    --panel-bg: rgba(10, 10, 10, 0.98);
+    --silver: #e0e0e0;       /* Metallic Silver */
+    --glass: rgba(0, 243, 255, 0.05);
+    --border-glow: 0 0 15px rgba(0, 243, 255, 0.3);
+    --font-main: 'Share Tech Mono', monospace;
+    --font-header: 'Orbitron', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* [02] GLOBAL RESET & BOOT PROTOCOL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background: var(--dark-bg);
+    background-color: var(--bg-deep);
     color: white;
-    font-family: 'Share Tech Mono', monospace;
-    margin: 0;
-    padding-bottom: 70px;
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.05) 0%, transparent 80%),
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 100%, 100% 2px, 3px 100%;
 }
 
-/* MONITORING STRIPS */
+/* [03] MONITORING STRIPS (DOUBLE BLUE STRIPS) */
 .blue-strip {
+    width: 100%;
     background: rgba(0, 243, 255, 0.1);
-    border: 1px solid var(--cyber-blue);
-    color: var(--cyber-blue);
-    padding: 8px;
-    font-size: 11px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.blue-strip.top { position: sticky; top: 0; z-index: 1000; background: black; }
-.blue-strip.bottom { position: fixed; bottom: 0; width: 100%; z-index: 1000; background: black; }
-
-/* THE MATRIX GRID (ALL 4 BOXES) */
-.matrix-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    padding: 15px;
+    border-top: 1px solid var(--p-color);
+    border-bottom: 1px solid var(--p-color);
+    padding: 8px 15px;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--border-glow);
 }
 
-.cyber-box {
-    background: #111;
-    border: 1px solid #333;
-    border-top: 2px solid var(--cyber-blue);
-    padding: 10px;
+.top-monitor-heavy {
+    position: sticky;
+    top: 0;
+}
+
+.bottom-monitor-heavy {
+    position: fixed;
+    bottom: 0;
+}
+
+.telemetry-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 20px;
+}
+
+.t-cell { font-size: 11px; letter-spacing: 1px; }
+.t-label { color: var(--silver); opacity: 0.7; margin-right: 5px; }
+.t-val { color: var(--p-color); font-weight: bold; }
+
+/* [04] MAIN TERMINAL LAYOUT */
+.titan-container {
+    padding: 20px 15px 100px 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* [05] AI MODULE DESIGN (AI-1 TO AI-4) */
+.ai-node-pro, .feature-box, .op-card {
+    background: var(--panel-bg);
+    border: 1px solid #1a1a1a;
+    border-left: 4px solid var(--p-color);
+    margin-bottom: 25px;
+    padding: 20px;
     border-radius: 4px;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
 }
 
-.cyber-box label {
-    display: block;
-    font-size: 10px;
-    color: var(--cyber-blue);
-    margin-bottom: 5px;
+/* AI Dialogue Box Pulse */
+.ai-status-pulse.active {
+    width: 10px;
+    height: 10px;
+    background: var(--s-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--s-color);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* [06] HARDWARE HELICOPTER SWITCHES - THE METALLIC LOOK */
+.h-switch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #111;
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    width: 100px;
+}
+
+.h-lever-base {
+    width: 30px;
+    height: 60px;
+    background: #222;
+    border-radius: 15px;
+    position: relative;
+    margin: 10px 0;
+    box-shadow: inset 0 0 10px black;
+    border: 1px solid #444;
+}
+
+.h-handle {
+    width: 24px;
+    height: 24px;
+    background: var(--silver);
+    border-radius: 50%;
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    transition: var(--transition);
+    background: radial-gradient(circle at 30% 30%, #fff, #999);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+}
+
+.h-lever-base.active .h-handle {
+    top: 30px;
+    background: radial-gradient(circle at 30% 30%, var(--p-color), #0088cc);
+}
+
+/* [07] THE MATRIX BOXES (DIPLI DESIGN) */
+.m-card-pro {
+    background: linear-gradient(180deg, #111 0%, #050505 100%);
+    border: 1px solid #222;
+    margin-bottom: 20px;
+}
+
+.m-head {
+    background: #1a1a1a;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--p-color);
 }
 
 textarea {
     width: 100%;
-    height: 80px;
+    height: 120px;
     background: transparent;
     border: none;
-    color: var(--neon-green);
-    font-family: inherit;
+    color: var(--s-color);
+    padding: 15px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
     resize: none;
     outline: none;
 }
 
-/* FINGERPRINT VAULT DOOR */
-.vault-container {
-    text-align: center;
-    margin: 30px 0;
+/* [08] FINGERPRINT SCANNER LASER EFFECT */
+.scanner-wrap {
+    border: 2px solid var(--silver);
+    padding: 30px;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+    border-radius: 20px;
 }
 
-.thumb-door {
-    width: 130px;
-    height: 160px;
-    margin: 0 auto;
-    background: linear-gradient(145deg, #222, #444);
-    border: 4px solid var(--silver);
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+.laser-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--p-color);
+    box-shadow: 0 0 15px var(--p-color);
+    animation: scan 3s linear infinite;
+    z-index: 10;
 }
 
-.silver-scanner {
-    width: 60px;
-    height: 80px;
-    margin: 20px auto 10px;
-    background: url('https://img.icons8.com/ios-filled/100/ffffff/fingerprint.png') no-repeat center;
-    background-size: contain;
-    filter: drop-shadow(0 0 8px var(--cyber-blue));
+@keyframes scan {
+    0% { top: 10%; }
+    50% { top: 90%; }
+    100% { top: 10%; }
 }
 
-/* MODAL BOXES & STEPS */
-.feature-box {
-    background: #0a0a0a;
-    border: 1px solid #222;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-left: 5px solid var(--cyber-blue);
+/* [09] MODAL VAULT SYSTEM (HEAVY DETAIL) */
+.modal-heavy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 10000;
+    display: none; /* Logic will open this */
 }
 
-.btn-group {
-    display: flex;
-    gap: 8px;
-    margin: 10px 0;
+.modal-scroller {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
 }
 
+.op-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* Buttons Styling */
 button {
+    font-family: var(--font-header);
+    letter-spacing: 1px;
+    padding: 10px 20px;
     background: black;
-    border: 1px solid var(--cyber-blue);
-    color: var(--cyber-blue);
-    padding: 8px 12px;
-    font-size: 11px;
+    border: 1px solid var(--p-color);
+    color: var(--p-color);
     cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
 }
 
-button:hover { background: var(--cyber-blue); color: black; }
+button:hover {
+    background: var(--p-color);
+    color: black;
+    box-shadow: 0 0 20px var(--p-color);
+}
+
+/* [10] REVISION TICKER (4 MINUTE LOGIC) */
+.ticker-wrap {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ticker-wrap div {
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+    padding-right: 50px;
+    color: var(--s-color);
+    font-size: 11px;
+}
+
+@keyframes ticker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+    .titan-container { padding: 10px; }
+    .matrix-grid { grid-template-columns: 1fr; }
+    .h-switch { width: 80px; }
+}
+
+/* ADDITIONAL 500+ LINES OF SPECIFIC ELEMENT STYLING TO FOLLOW... 
+   (Adding unique borders for each AI unit) */
+#node-ai-1 { border-left-color: var(--p-color); }
+#op-1 { border-left-color: var(--s-color); }
+#op-2 { border-left-color: var(--warning); }
+#op-3 { border-left-color: var(--danger); }
