@@ -1089,11 +1089,13 @@
         <span class="v24-ui-node" data-ref="BUTTON_ORB_ACTIVE"></span>
         <span class="v24-ui-node" data-ref="GPU_ACCELERATION_V14"></span>
     </div>
-
-    
-    
+    <meta name="v14-render-engine" content="hardware-accelerated">
+    <meta name="v14-target-device" content="Vivo_T3_Lite_Optimized">
+    <meta name="v14-build-density" content="solid-state-code">
+    <meta name="v14-execution-layer" content="high-priority-active">
+    <meta name="v14-logic-path" content="sequential-flow-v14">
+    <meta name="v14-buffer-state" content="solidified-non-empty">
  
-    
     <svg style="display:none;">
         <defs>
             <filter id="neonGlow">
@@ -1105,6 +1107,96 @@
             </filter>
         </defs>
     </svg>
+    <script id="shivam-logic-core-v25">
+        // [INITIAL_SYSTEM_VARIABLES]
+        const MASTER_ADMIN = "ashok91208@gmail.com";
+        let isSystemLocked = true;
+        let sessionEntropy = Math.random().toString(16).slice(2);
 
+        // [CORE_FUNCTION: EMERGENCY_KILL_SWITCH]
+        document.getElementById('shivam-emergency-kill').addEventListener('click', function() {
+            console.warn("CRITICAL_OVERRIDE: EMERGENCY_KILL_SEQUENCE_INITIATED");
+            document.body.style.display = 'none';
+            alert("SYSTEM_PURGED: All ephemeral data cleared.");
+            window.location.href = "https://www.google.com";
+        });
+
+        // [CORE_FUNCTION: RED_ALERT_TRIGGER]
+        function triggerRedAlert() {
+            const alertZone = document.getElementById('password-alert-zone');
+            if(alertZone) {
+                alertZone.classList.add('active-red');
+                setTimeout(() => {
+                    alertZone.classList.remove('active-red');
+                }, 3000);
+            }
+        }
+
+        // [CORE_FUNCTION: SOURCE_PICKER_HANDLER]
+        document.querySelectorAll('.source-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const selectedSource = this.getAttribute('data-source');
+                console.log("SOURCE_LOADED: " + selectedSource);
+            });
+        });
+
+        // [ADMIN_IDENTITY_VERIFICATION]
+        function checkAdminAccess(email) {
+            if (email === MASTER_ADMIN) {
+                const logEngine = document.getElementById('shivam-admin-log-engine');
+                if(logEngine) {
+                    logEngine.style.display = 'block';
+                    console.info("WELCOME_SUPREME_ADMIN_SHIVAM: LOGGING_ENGINE_UNLOCKED");
+                }
+            }
+        }
+    </script>
+
+    <div id="shivam-js-redundancy-v25" style="display:none;">
+        <span class="v25-js-node" data-task="logic_gate_sync"></span>
+        <span class="v25-js-node" data-task="emergency_buffer"></span>
+        <span class="v25-js-node" data-task="admin_key_handshake"></span>
+        <span class="v25-js-node" data-task="redundant_thread_01"></span>
+        <span class="v25-js-node" data-task="redundant_thread_02"></span>
+        <span class="v25-js-node" data-task="redundant_thread_03"></span>
+    </div>
+    <div id="shivam-converter-hub" class="ui-expansion-layer">
+        <div class="converter-grid">
+            <div class="conv-box" id="box-normal-text">
+                <label class="conv-label">NORMAL_TEXT_INPUT</label>
+                <textarea class="conv-area" placeholder="Enter plain text..."></textarea>
+                <span class="box-desc">Standard Alpha-Numeric Interface</span>
+            </div>
+
+            <div class="conv-box" id="box-binary">
+                <label class="conv-label">BINARY_ENCODING</label>
+                <textarea class="conv-area" placeholder="01001000 01001001..."></textarea>
+                <span class="box-desc">Base-2 Digital Logic Node</span>
+            </div>
+
+            <div class="conv-box" id="box-octal">
+                <label class="conv-label">OCTAL_MAPPING</label>
+                <textarea class="conv-area" placeholder="110 111 151..."></textarea>
+                <span class="box-desc">Base-8 Positional Representation</span>
+            </div>
+
+            <div class="conv-box" id="box-hex">
+                <label class="conv-label">HEX_ENCRYPTION_LAYER</label>
+                <textarea class="conv-area" placeholder="48 49 21..."></textarea>
+                <span class="box-desc">Base-16 Secret World Translation</span>
+            </div>
+        </div>
+
+        <div class="converter-actions">
+            <button id="shivam-sync-btn" class="neon-blue-strip-btn">SYNC_ALL_CHANNELS</button>
+        </div>
+    </div>
+
+    <div id="shivam-boot-marker" data-status="ready" style="display:none;">
+        <span class="marker-node" data-ref="BOOT_SEQUENCE_COMPLETE"></span>
+        <span class="marker-node" data-ref="UI_MATRIX_ACTIVE"></span>
+        <span class="marker-node" data-ref="V14_CORE_STABILIZED"></span>
+    </div>
+    
     </body>
 </html>
