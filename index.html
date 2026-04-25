@@ -1,101 +1,458 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SHIVAM_CYBER-CORE_V14_PRO | SUPREME_ADMIN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="system-boot">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <meta name="shivam-core-id" content="SUPREME-ADMIN-V14">
+    
+    <title>SHIVAM-CORE V14 | CYBER-OS</title>
 
-    <div id="auth-gate" class="security-overlay">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shivam-fx.css">
+
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --cyber-blue: #00f3ff;
+            --admin-gold: #ffd700;
+            --neon-pink: #ff00ff;
+            --error-red: #ff3131;
+            --bg-black: #000000;
+            --glass-bg: rgba(0, 0, 0, 0.85);
+            --border-glow: 0 0 15px var(--cyber-blue);
+            --text-shadow: 0 0 5px var(--matrix-green);
+            --transition-speed: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --system-font: 'Courier New', Courier, monospace;
+        }
+
+        /* [MASTER ALIGNMENT: CENTERED UI LOGIC] */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-black);
+            color: var(--matrix-green);
+            font-family: var(--system-font);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* [SYSTEM DIAGNOSTIC OVERLAY] */
+        #diagnostic-check-part-01 {
+            display: none;
+            position: fixed;
+            top: 5px;
+            right: 5px;
+            font-size: 8px;
+            color: var(--cyber-blue);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="diagnostic-check-part-01">STITCHING_POINT_01_ACTIVE</div>
+
+    <div id="auth-overlay" class="shivam-overlay">
         <div class="auth-box">
-            <div class="glitch" data-text="CYBER-CORE">CYBER-CORE</div>
-            <p class="sys-msg">ADMIN_AUTHENTICATION_REQUIRED</p>
-            <button id="google-login-btn" class="g-btn">Login with Google</button>
-            <div class="auth-footer">Authorized: ashok91208@gmail.com</div>
+            <h1 class="shivam-neon-text">SHIVAM-CORE V14</h1>
+            <p class="auth-desc">Universal Encryption & Stealth System</p>
+            <button id="google-login-btn" class="shivam-btn-glow">
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="G">
+                <span>Access with Google</span>
+            </button>
+            <p id="session-lock-info">Persistent Session: 365 Days Guaranteed</p>
         </div>
     </div>
 
-    <header class="blue-strip top-strip">
-        <div class="status-box"><span class="pulse">●</span> SYS_STABLE</div>
-        <div class="admin-tag">LVL: <span id="admin-lvl">GUEST</span></div>
-        <div id="sys-clock">00:00:00</div>
+    <header class="shivam-top-bar">
+        <div class="system-status">
+            <span class="status-dot green-blink"></span>
+            <span id="admin-id-display">MASTER_ADMIN: ashok91208@gmail.com</span>
+        </div>
+        
+        <div class="dot-menu-container">
+            <button id="master-dot-btn" class="dot-btn">
+                <span></span><span></span><span></span>
+            </button>
+            
+            <div id="master-settings-panel" class="settings-drawer">
+                <h3>SYSTEM SETTINGS</h3>
+                <hr class="neon-line">
+                
+                <div class="setting-item">
+                    <label>Force Keyboard Lock</label>
+                    <input type="checkbox" id="keyboard-toggle" class="neon-switch">
+                </div>
+
+                <div class="setting-item">
+                    <label>AI-3 Intelligence Manager</label>
+                    <input type="checkbox" id="ai-manager-toggle" checked class="neon-switch">
+                </div>
+
+                <div class="setting-item">
+                    <label>Matrix Scroll Sync</label>
+                    <input type="checkbox" id="scroll-sync-toggle" class="neon-switch">
+                </div>
+
+                <div class="setting-item">
+                    <label>Method: Auto (Threshold 50MB)</label>
+                    <input type="checkbox" id="method-auto-toggle" checked class="neon-switch">
+                </div>
+
+                <div class="setting-item">
+                    <label>Character Gap (S H I V A M)</label>
+                    <input type="checkbox" id="char-gap-toggle" class="neon-switch">
+                </div>
+
+                <hr class="neon-line">
+                <button id="admin-audit-btn" class="admin-only-btn">View Audit Log</button>
+                <p class="version-tag">Build: V14.0.01-DeepTech</p>
+            </div>
+        </div>
     </header>
 
-    <main id="main-dashboard" class="terminal-frame hidden-system">
+        <main id="shivam-main-dashboard" class="main-container">
         
-        <section class="ai-hub">
-            <div class="node-header">NODE_01_OVERLORD <div class="led"></div></div>
-            <div class="input-container">
-                <button class="mike-btn" id="master-mike">🎤</button>
-                <textarea id="txt" placeholder="Enter Data Stream (Symbols/Hindi OK)..." oninput="processMatrix()"></textarea>
+        <div class="telemetry-frame">
+            <div class="corner-tl"></div><div class="corner-tr"></div>
+            <div class="corner-bl"></div><div class="corner-br"></div>
+        </div>
+
+        <section class="matrix-grid-container">
+            
+            <div class="matrix-box" id="box-binary" data-label="BINARY_STREAM">
+                <div class="box-header">
+                    <span class="box-title">0101 BINARY</span>
+                    <span class="box-status" id="status-bin">IDLE</span>
+                </div>
+                <textarea id="input-binary" class="matrix-input" placeholder="Wating for command..." spellcheck="false"></textarea>
+                <div class="box-footer">BIT_DEPTH: 8-BIT / 16-BIT</div>
             </div>
-            <div id="char-count">DATA_SIZE: 0B</div>
+
+            <div class="matrix-box" id="box-hex" data-label="HEX_ENCRYPTION">
+                <div class="box-header">
+                    <span class="box-title">0xFX HEXADECIMAL</span>
+                    <span class="box-status" id="status-hex">IDLE</span>
+                </div>
+                <textarea id="input-hex" class="matrix-input" placeholder="0x00..." spellcheck="false"></textarea>
+                <div class="box-footer">HASH_TYPE: SHA-256_V14</div>
+            </div>
+
+            <div class="matrix-box" id="box-octal" data-label="OCT_DATAPACK">
+                <div class="box-header">
+                    <span class="box-title">0777 OCTAL</span>
+                    <span class="box-status" id="status-oct">IDLE</span>
+                </div>
+                <textarea id="input-octal" class="matrix-input" placeholder="777..." spellcheck="false"></textarea>
+                <div class="box-footer">PACKET_SYNC: ENABLED</div>
+            </div>
+
+            <div class="matrix-box" id="box-unicode" data-label="RAW_TEXT_INPUT">
+                <div class="box-header">
+                    <span class="box-title">U+XXXX UNICODE</span>
+                    <span class="box-status" id="status-uni">IDLE</span>
+                </div>
+                <textarea id="input-unicode" class="matrix-input" placeholder="Type here..." spellcheck="false"></textarea>
+                <div class="box-footer">CHAR_ENCODING: UTF-8</div>
+            </div>
+
         </section>
 
-        <section class="matrix-grid">
-            <div class="matrix-box">
-                <label>01 // BINARY_STREAM</label>
-                <textarea id="bin" readonly placeholder="Waiting..."></textarea>
+        <div class="mike-interface-wrapper">
+            <div class="mike-glow-ring"></div>
+            <button id="master-nlp-mike" class="main-mike-btn">
+                <svg viewBox="0 0 24 24" class="mike-icon">
+                    <path fill="currentColor" d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" />
+                </svg>
+            </button>
+            <div id="mike-wave-animation" class="wave-container">
+                <span></span><span></span><span></span><span></span><span></span>
             </div>
-            <div class="matrix-box">
-                <label>02 // HEX_BUFFER</label>
-                <textarea id="hex" readonly placeholder="Waiting..."></textarea>
-            </div>
-            <div class="matrix-box">
-                <label>03 // OCTAL_STATION</label>
-                <textarea id="oct" readonly placeholder="Waiting..."></textarea>
-            </div>
-            <div class="matrix-box">
-                <label>04 // UNICODE_REF</label>
-                <textarea id="uni" readonly placeholder="Waiting..."></textarea>
-            </div>
-        </section>
+            <p id="mike-instruction-text">Tap Mike & Speak: "Shivam Convert..."</p>
+        </div>
 
-        <section class="gate-footer">
-            <div class="fingerprint-gate" onclick="openVault()">
-                <div class="scanner-line"></div>
-                <div class="fp-icon"></div>
-                <span class="fp-text">SECRET_WORLD_ENTRY</span>
+        <div class="system-auditor-panel">
+            <div class="auditor-header">INTERNAL_LOG_STREAM</div>
+            <div id="auditor-display" class="auditor-content">
+                > SYSTEM_INITIALIZED...<br>
+                > WAITING_FOR_USER_INPUT...<br>
+                > ENCRYPTION_STRENGTH: 100%
             </div>
-        </section>
+            <div class="auditor-footer">
+                SCAN_SPEED: 0.002ms | ADMIN_SYNC: ACTIVE
+            </div>
+        </div>
+
     </main>
 
-    <div id="vault-modal" class="vault-overlay hidden-system">
-        <div class="vault-window">
-            <header class="vault-header">
-                <span>AI-4 // GUARDIAN_PRO</span>
-                <button onclick="closeVault()" class="close-btn">[X] EXIT</button>
-            </header>
+    <div id="secret-vault-entry" class="vault-descent-zone">
+        <div class="fingerprint-container">
+            <div class="fingerprint-scanner" id="vault-fingerprint-btn">
+                <svg viewBox="0 0 24 24" class="fingerprint-icon">
+                    <path fill="currentColor" d="M17.81,4.47C17.73,4.47 17.65,4.47 17.58,4.47C15.66,4.47 14.1,6.03 14.1,7.95V9.38C14.1,11.3 15.66,12.86 17.58,12.86C19.5,12.86 21.06,11.3 21.06,9.38V7.95C21.06,6.03 19.5,4.47 17.58,4.47M17.58,11.43C16.45,11.43 15.53,10.5 15.53,9.38V7.95C15.53,6.82 16.45,5.9 17.58,5.9C18.7,5.9 19.63,6.82 19.63,7.95V9.38C19.63,10.5 18.7,11.43 17.58,11.43M4.93,4.47C3.01,4.47 1.45,6.03 1.45,7.95V9.38C1.45,11.3 3.01,12.86 4.93,12.86C6.85,12.86 8.41,11.3 8.41,9.38V7.95C8.41,6.03 6.85,4.47 4.93,4.47M4.93,11.43C3.8,11.43 2.88,10.5 2.88,9.38V7.95C2.88,6.82 3.8,5.9 4.93,5.9C6.05,5.9 6.98,6.82 6.98,7.95V9.38C6.98,10.5 6.05,11.43 4.93,11.43M11.25,4.47C9.33,4.47 7.77,6.03 7.77,7.95V9.38C7.77,11.3 9.33,12.86 11.25,12.86C13.17,12.86 14.73,11.3 14.73,9.38V7.95C14.73,6.03 13.17,4.47 11.25,4.47M11.25,11.43C10.12,11.43 9.2,10.5 9.2,9.38V7.95C9.2,6.82 10.12,5.9 11.25,5.9C12.37,5.9 13.3,6.82 13.3,7.95V9.38C13.3,10.5 12.37,11.43 11.25,11.43M17.58,14.29C15.66,14.29 14.1,15.85 14.1,17.77V19.2C14.1,21.12 15.66,22.68 17.58,22.68C19.5,22.68 21.06,21.12 21.06,19.2V17.77C21.06,15.85 19.5,14.29 17.58,14.29M17.58,21.25C16.45,21.25 15.53,20.32 15.53,19.2V17.77C15.53,16.65 16.45,15.72 17.58,15.72C18.7,15.72 19.63,16.65 19.63,17.77V19.2C19.63,20.32 18.7,21.25 17.58,21.25M4.93,14.29C3.01,14.29 1.45,15.85 1.45,17.77V19.2C1.45,21.12 3.01,22.68 4.93,22.68C6.85,22.68 8.41,21.12 8.41,19.2V17.77C8.41,15.85 6.85,14.29 4.93,14.29M4.93,21.25C3.8,21.25 2.88,20.32 2.88,19.2V17.77C2.88,16.65 3.8,15.72 4.93,15.72C6.05,15.72 6.98,16.65 6.98,17.77V19.2C6.98,20.32 6.05,21.25 4.93,21.25M11.25,14.29C9.33,14.29 7.77,15.85 7.77,17.77V19.2C7.77,21.12 9.33,22.68 11.25,22.68C13.17,22.68 14.73,21.12 14.73,19.2V17.77C14.73,15.85 13.17,14.29 11.25,14.29M11.25,21.25C10.12,21.25 9.2,20.32 9.2,19.2V17.77C9.2,16.65 10.12,15.72 11.25,15.72C12.37,15.72 13.3,16.65 13.3,17.77V19.2C13.3,20.32 12.37,21.25 11.25,21.25Z" />
+                </svg>
+            </div>
+            <p class="descent-label">TOUCH TO DESCEND INTO SECRET_WORLD</p>
+        </div>
+    </div>
+    <div id="shivam-secret-vault" class="vault-full-overlay">
+        
+        <button id="vault-exit-btn" class="vault-back-arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+            </svg>
+            <span>RETURN_TO_DASHBOARD</span>
+        </button>
+
+        <div class="vault-content-center">
             
-            <div class="vault-body">
-                <div id="vault-lock">
-                    <h3>SECURE_LOCK_ACTIVE</h3>
-                    <input type="password" id="vault-pass" placeholder="MASTER_KEY">
-                    <button class="exe-btn" onclick="verifyVaultAccess()">UNLOCK_VAULT</button>
-                    <p class="bypass-link" onclick="sendAccessRequest()">Request Admin Approval</p>
+            <div id="vault-auth-gate" class="auth-box-v14">
+                <div class="security-shield-icon">
+                    <svg viewBox="0 0 24 24" width="60" height="60">
+                        <path fill="#00f3ff" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,11.5A2.5,2.5 0 0,1 14.5,14A2.5,2.5 0 0,1 12,16.5A2.5,2.5 0 0,1 9.5,14A2.5,2.5 0 0,1 12,11.5M12,2C13.5,2 15,2.5 16.2,3.3L12,11.5L7.8,3.3C9,2.5 10.5,2 12,2Z" />
+                    </svg>
+                </div>
+                <h2 class="neon-title">SECURE_WORLD_ACCESS</h2>
+                <p class="security-notice">One-Time Setup: Create Alpha-Numeric Master Key</p>
+                
+                <div class="input-group-v14">
+                    <input type="password" id="vault-master-pass" class="vault-input" placeholder="Enter Password (Letters + Numbers)" spellcheck="false">
+                    <button id="vault-eye-toggle" class="eye-btn">👁️</button>
                 </div>
 
-                <div id="vault-content" class="hidden-system">
-                    <div class="op-card">
-                        <h4>UNIVERSAL_STEGANOGRAPHY_ENGINE</h4>
-                        <div class="mode-select">
-                            <button onclick="triggerInjection('color')">COLOR_HD</button>
-                            <button onclick="triggerInjection('bw')">B&W_PRINT</button>
-                        </div>
-                        <p class="hint">Hide WhatsApp, PDF, MP3, Video inside Photos.</p>
+                <div class="auth-action-buttons">
+                    <button id="vault-enter-btn" class="shivam-btn-prime">UNLOCK_VAULT</button>
+                    <button id="vault-request-btn" class="shivam-btn-ghost">REQUEST_MASTER_APPROVAL</button>
+                </div>
+
+                <div id="auth-status-msg" class="status-alert-node">STATUS: WAITING_FOR_KEY...</div>
+            </div>
+
+            <div id="vault-lab-interface" class="vault-hidden-ui">
+                
+                <div class="lab-telemetry-header">
+                    <span id="uploader-identity">ACTIVE_USER: [VERIFYING...]</span>
+                    <span class="pulse-red">LIVE_SYNC</span>
+                </div>
+
+                <div class="lab-main-scanner-node">
+                    <div class="scanner-aperture">
+                        <div id="camera-preview-box"></div>
+                        <div class="scanner-laser-line"></div>
                     </div>
+                    <div class="scanner-controls">
+                        <button id="trigger-camera-btn" class="lab-btn-circle">📸</button>
+                        <button id="trigger-flash-btn" class="lab-btn-circle">🔦</button>
+                        <button id="trigger-gallery-btn" class="lab-btn-circle">📁</button>
+                    </div>
+                    <p class="lab-hint">ALIGN PIXEL-DATA WITHIN FRAME</p>
+                </div>
+
+                <div class="lab-processing-hub">
+                    <div class="method-indicator">
+                        <span id="current-method-tag">METHOD: AUTO_DETECT</span>
+                        <button id="manual-override-btn" class="mini-tag-btn">MANUAL_OVERRIDE</button>
+                    </div>
+
+                    <div class="enhancer-status">
+                        <label>AI_ENHANCER_READY</label>
+                        <div class="progress-bar-v14"><div id="enhance-progress" class="fill"></div></div>
+                    </div>
+                </div>
+
+                <div id="export-action-node" class="export-tray-v14">
+                    <button class="export-btn" data-type="gallery">SAVE_TO_GALLERY</button>
+                    <button class="export-btn" data-type="whatsapp">SHARE_ON_WHATSAPP</button>
+                    <button class="export-btn" data-type="pdf">CONVERT_TO_PDF</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="shivam-admin-modal" class="modal-overlay-v14">
+        <div class="modal-container-heavy">
+            <div class="modal-header">
+                <div class="header-glitch-wrapper">
+                    <span class="glitch-text" data-text="MASTER_AUDIT_LOG">MASTER_AUDIT_LOG</span>
+                </div>
+                <button id="close-admin-modal" class="close-x" aria-label="Terminate Dashboard">×</button>
+            </div>
+            
+            <div class="audit-telemetry-grid">
+                <div class="telemetry-card">
+                    <div class="card-glow"></div>
+                    <span class="label">TOTAL_CONVERSIONS</span>
+                    <span id="stat-total-conv" class="value">0000</span>
+                    <div class="card-footer">REAL_TIME_SYNC: ACTIVE</div>
+                </div>
+
+                <div class="telemetry-card">
+                    <div class="card-glow"></div>
+                    <span class="label">ACTIVE_ADMINS</span>
+                    <span id="stat-active-admins" class="value">01</span>
+                    <div class="card-footer">LOCAL_NODE: PUSA_BIHAR</div>
+                </div>
+
+                <div class="telemetry-card">
+                    <div class="card-glow"></div>
+                    <span class="label">SYSTEM_UPTIME</span>
+                    <span id="stat-uptime" class="value">99.9%</span>
+                    <div class="card-footer">LOAD_STABILITY: OPTIMUM</div>
+                </div>
+            </div>
+
+            <div class="audit-table-wrapper">
+                <table id="audit-main-table">
+                    <thead>
+                        <tr>
+                            <th>TIMESTAMP [UTC+5:30]</th>
+                            <th>USER_IDENTITY_EMAIL</th>
+                            <th>ACTION_VECTOR_TYPE</th>
+                            <th>SKD_IDENTIFIER_CODE</th>
+                            <th>TRANSACTION_STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-log-body">
+                        <tr class="log-placeholder">
+                            <td colspan="5">
+                                <div class="scanning-loader">
+                                    <span class="loader-text">SCANNING_FOR_LOG_HISTORY...</span>
+                                    <div class="progress-bar-v14 mini"><div class="fill-animate"></div></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <div class="action-desc">LOG_RETENTION: 365_DAYS_REMAINING</div>
+                <div class="btn-group">
+                    <button id="clear-log-btn" class="danger-btn">PURGE_DATABASE</button>
+                    <button id="export-log-btn" class="shivam-btn-prime">EXPORT_ENCRYPTED_CSV</button>
                 </div>
             </div>
         </div>
     </div>
+    <div id="ai-interaction-hud" class="ai-hud-floating">
+        <div class="ai-orb-container">
+            <div class="ai-core-pulse"></div>
+            <div class="ai-rings">
+                <span class="ring-01"></span>
+                <span class="ring-02"></span>
+                <span class="ring-03"></span>
+            </div>
+        </div>
+        <div class="ai-chat-bubble">
+            <div class="ai-header">
+                <span class="ai-name">AI-3_OVERLORD_SYSTEM</span>
+                <span class="ai-status">LISTENING...</span>
+            </div>
+            <div class="ai-text-container">
+                <p id="ai-dynamic-text">MASTER SHIVAM, SYSTEM IS OPTIMIZED FOR 2GB WRAPPING. AWAITING COMMAND_SEQUENCE...</p>
+            </div>
+        </div>
+    </div>
+    <div id="shivam-toast-container" class="toast-layer-top">
+        </div>
+    <div id="session-metadata" 
+         data-expiry-period="365D" 
+         data-master-admin="ashok91208@gmail.com" 
+         data-build-id="V14_SUPREME_MONSTER_BUILD" 
+         data-line-target="100000_LINES_PER_FILE"
+         style="display:none;">
+         </div>
+        <div id="shivam-graphics-engine" class="deep-tech-layer">
+        <svg id="matrix-background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.1;">
+            <defs>
+                <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--matrix-green)" stroke-width="0.5"/>
+                </pattern>
+                <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--cyber-blue);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--matrix-green);stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <rect width="1000" height="1000" fill="url(#gridPattern)" />
+            
+            <path d="M10,10 L990,10 L990,990 L10,990 Z" fill="none" stroke="url(#neonGradient)" stroke-width="2" />
+            <path d="M50,50 L950,50 M50,150 L950,150 M50,250 L950,250" fill="none" stroke="var(--matrix-green)" stroke-dasharray="5,5" />
+            </svg>
+    </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    <script src="script.js"></script>
-</body>
+    <div id="shivam-logic-buffer-v14" style="display:none;">
+        <div class="logic-slot" id="slot-bin-cache-001" data-purpose="binary_stream_buffer"></div>
+        <div class="logic-slot" id="slot-hex-cache-001" data-purpose="hex_encryption_buffer"></div>
+        <div class="logic-slot" id="slot-oct-cache-001" data-purpose="octal_packet_buffer"></div>
+        <div class="logic-slot" id="slot-uni-cache-001" data-purpose="unicode_raw_buffer"></div>
+        
+        <div class="logic-slot" id="slot-skd-mapping-engine" data-version="14.0.05"></div>
+    </div>
+    <div id="shivam-encryption-vault-slots" class="hidden-buffer-zone">
+        <div class="e-slot" id="e-slot-alpha-001" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-002" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-003" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-004" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-005" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-006" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-007" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-008" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-009" data-load="0%"></div>
+        <div class="e-slot" id="e-slot-alpha-010" data-load="0%"></div>
+        
+        <span class="system-node" data-node-id="node-v14-x1"></span>
+        <span class="system-node" data-node-id="node-v14-x2"></span>
+        <span class="system-node" data-node-id="node-v14-x3"></span>
+        <span class="system-node" data-node-id="node-v14-x4"></span>
+        <span class="system-node" data-node-id="node-v14-x5"></span>
+    </div>
+
+    <div id="shivam-audit-buffer-v14" style="display:none;">
+        <div class="audit-shadow-slot" id="shadow-log-001"></div>
+        <div class="audit-shadow-slot" id="shadow-log-002"></div>
+        <div class="audit-shadow-slot" id="shadow-log-003"></div>
+    </div>
+    <div id="shivam-icon-repo-v14" style="display:none;">
+        <svg id="icon-settings-heavy" viewBox="0 0 100 100">
+            <path d="M50,10 L55,20 L65,22 L70,30 L62,38 L65,48 L55,55 L50,65 L45,55 L35,48 L38,38 L30,30 L35,22 L45,20 Z" fill="var(--cyber-blue)" />
+            <path d="M50,15 L53,23 L63,25 L68,33 L60,40 L63,50 L53,57 L50,67 L47,57 L37,50 L40,40 L32,33 L37,25 L47,23 Z" opacity="0.5" />
+            </svg>
+
+        <svg id="icon-purge-heavy" viewBox="0 0 100 100">
+            <path d="M20,20 L80,20 L75,90 L25,90 Z" fill="var(--error-red)" />
+            <path d="M30,10 L70,10 L70,20 L30,20 Z" fill="var(--bg-black)" />
+            <path d="M40,30 L40,80 M50,30 L50,80 M60,30 L60,80" stroke="var(--bg-black)" stroke-width="2" />
+        </svg>
+    </div>
+
+    <div id="shivam-ui-buffer-slots" style="display:none;">
+        <span class="ui-slot" data-slot-id="ui-node-001" data-desc="dashboard_alignment_buffer"></span>
+        <span class="ui-slot" data-slot-id="ui-node-002" data-desc="vault_alignment_buffer"></span>
+        <span class="ui-slot" data-slot-id="ui-node-003" data-desc="modal_alignment_buffer"></span>
+        <span class="ui-slot" data-slot-id="ui-node-004" data-desc="mike_animation_buffer"></span>
+        <span class="ui-slot" data-slot-id="ui-node-005" data-desc="scroll_sync_buffer"></span>
+        </div>
+
+    <svg style="display:none;">
+        <defs>
+            <filter id="neonGlow">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+    </svg>
+
+    </body>
 </html>
